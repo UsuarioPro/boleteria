@@ -1,14 +1,14 @@
 <?php
     //database datos
     define('_SERVER_DB_', 'localhost');
-    define('_DB_', 'gestor_archivo');
+    define('_DB_', 'tienda_ticket');
     define('_USER_DB_', 'root');
     define('_PASSWORD_DB_', '');
     // --------------------------------------------------
     //name project
     define('_NAME_PROJECT_', 'tedy');
     //Servidor
-    define('_SERVER_', 'http://localhost:8081/tedy/');
+    define('_SERVER_', 'http://localhost:8081/boleteria/');
     //Servidor Socket
     define('_SERVER_SOCKET_', 'ws://localhost:8303'); //Apuntar a la IP/Puerto configurado en el contructor del WebServerSocket, que es donde está escuchando el socket.
     // ruta para acceder a las vistas

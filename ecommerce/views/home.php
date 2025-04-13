@@ -13,9 +13,9 @@
     <!-- Standard Favicon -->
     <link href="<?= _SERVER_?>ecommerce/favicon.ico" rel="shortcut icon">
     <!-- Base Google Font for Web-app -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
     <!-- Google Fonts for Banners only -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet"> -->
     <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="<?= _SERVER_?>ecommerce/css/bootstrap.min.css">
     <!-- Font Awesome 5 -->
@@ -37,6 +37,7 @@
 <body>
 <!-- app -->
 <div id="app">
+    <input type="hidden" id="urlweb" name="urlweb" value="<?= _SERVER_?>">
     <!-- Header -->
     <header>
         <!-- Top-Header -->
@@ -51,31 +52,16 @@
                                 <i class="fas fa-chevron-down u-s-m-l-9"></i>
                             </a>
                             <ul class="g-dropdown" style="width:200px">
-                                <li>
-                                    <a href="#">
-                                        <i class="fas fa-music u-s-m-r-9"></i>
-                                        Conciertos</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fas fa-football-ball u-s-m-r-9"></i>
-                                        Deporte</a>
-                                </li>
-                                <li>
-                                    <a href="checkout.html">
-                                        <i class="fas fa-ticket-alt u-s-m-r-9"></i>
-                                        Teatro</a>
-                                </li>
-                                <li>
-                                    <a href="account.html">
-                                        <i class="fas fa-film u-s-m-r-9"></i>
-                                        Entretenimiento</a>
-                                </li>
-                                <li>
-                                    <a href="account.html">
-                                        <i class="fas fa-ellipsis-h u-s-m-r-9"></i>
-                                        Otros</a>
-                                </li>
+                                <?php
+                                    foreach($categorias as $c)
+                                    {
+                                        $ruta_img = _SERVER_ .'ecommerce/media/brand-locales/';
+                                        echo '
+                                            <li>
+                                                <a href="#"><i class="'.$c->cat_icono.' u-s-m-r-9"></i>'.$c->cat_nombre.'</a>
+                                            </li>';
+                                    }
+                                ?>
                             </ul>
                         </li>
                     </ul>
@@ -126,8 +112,8 @@
                 <div class="row clearfix align-items-center">
                     <div class="col-lg-3 col-md-9 col-sm-6">
                         <div class="brand-logo text-lg-center">
-                            <a href="home.html">
-                                <img src="<?= _SERVER_?>ecommerce/images/main-logo/groover-branding-1.png" alt="Groover Brand Logo" class="app-brand-logo">
+                            <a href="<?= _SERVER_?>">
+                                <img src="<?= _SERVER_?>ecommerce/media/main-logo/logo.png" alt="Groover Brand Logo" class="app-brand-logo">
                             </a>
                         </div>
                     </div>
@@ -235,36 +221,25 @@
             <div class="container">
                 <div class="brand-slider-content-local owl-carousel" data-item="10">
                     <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/1.jpg" alt="Brand Logo 1"></a>
+                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/1.jpg" alt="Hoy" title="Eventos de Hoy"></a>
                     </div>
                     <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/2.jpg" alt="Brand Logo 1"></a>
+                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/2.jpg" alt="Eventos de Fin de Semana" title="Eventos de Fin de Semana"></a>
                     </div>
                     <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/3.jpg" alt="Brand Logo 1"></a>
+                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/3.jpg" alt="Populares" alt="Más Populares"></a>
                     </div>
-                    <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/4.jpg" alt="Brand Logo 1"></a>
-                    </div>
-                    <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/5.jpg" alt="Brand Logo 1"></a>
-                    </div>
-                    <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/6.jpg" alt="Brand Logo 1"></a>
-                    </div>
-                    <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/7.jpg" alt="Brand Logo 1"></a>
-                    </div>
-                    <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/8.jpg" alt="Brand Logo 1"></a>
-                    </div>
-                    <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/9.jpg" alt="Brand Logo 1"></a>
-                    </div>
-                    <div class="brand-pic brand-sm">
-                        <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/10.jpg" alt="Brand Logo 1"></a>
-                    </div>
-
+                    <?php
+                        foreach($locales as $l)
+                        {
+                            $ruta_img = _SERVER_ .'ecommerce/media/brand-locales/';
+                            $imagen = empty($l->loc_imagen_logo)? $ruta_img.'default.jpg' : $ruta_img.$l->loc_imagen_logo;
+                            echo '
+                            <div class="brand-pic brand-sm">
+                                <a href="#"><img src="'.$imagen.'" alt="'.$imagen.'" title="'.$imagen.'"></a>
+                            </div>';
+                        }
+                    ?>
                 </div>
             </div>
         </div>
@@ -274,13 +249,21 @@
     <!-- Main-Slider -->
     <div class="default-height ph-item">
         <div class="slider-main owl-carousel">
-            <div class="bg-image"  style="background-image: url(<?= _SERVER_?>ecommerce/media/main-slider/2.jpg);"></div>
-            <div class="bg-image"  style="background-image: url(<?= _SERVER_?>ecommerce/media/main-slider/3.jpg);"></div>
-            <div class="bg-image"  style="background-image: url(<?= _SERVER_?>ecommerce/media/main-slider/4.jpg);"></div>
-            <div class="bg-image"  style="background-image: url(<?= _SERVER_?>ecommerce/media/main-slider/5.jpg);"></div>
-            <div class="bg-image"  style="background-image: url(<?= _SERVER_?>ecommerce/media/main-slider/6.jpg);"></div>
-            <div class="bg-image"  style="background-image: url(<?= _SERVER_?>ecommerce/media/main-slider/7.jpg);"></div>
-            <div class="bg-image"  style="background-image: url(<?= _SERVER_?>ecommerce/media/main-slider/8.jpg);"></div>
+            <?php
+                if(empty($banners))
+                {
+                    echo '<div class="bg-image"  style="background-image: url('._SERVER_.'ecommerce/media/main-slider/defaulf.jpg);"></div>';
+                }
+                else
+                {
+                    foreach($banners as $b)
+                    {
+                        $ruta_img = _SERVER_ .'ecommerce/media/main-slider/';
+                        $imagen = empty($b->ban_nombre)? $ruta_img.'default.jpg' : $ruta_img.$b->ban_nombre;
+                        echo '<div class="bg-image"  style="background-image: url('.$imagen.'"></div>';
+                    }
+                }
+            ?>
         </div>
     </div>
     <!-- Main-Slider /- -->
@@ -288,66 +271,18 @@
     <div class="brand-slider u-s-p-b-40 pt-4">
         <div class="container">
             <div class="brand-slider-content owl-carousel" data-item="7">
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/1.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Corazon Serrano</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/2.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Son del Duke</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/3.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">La Unica Tropical</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/4.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Armonia 10</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/5.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Son del Duke</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/6.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Son del Duke</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/7.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Surandina</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/8.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Marisol y la Magia del Norte</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/9.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Papilon</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/10.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Agua Marina</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/11.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Rosita</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/12.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Max Castro</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/13.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Son del Duke</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/14.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Son del Duke</small></div>
-                </div>
-                <div class="brand-pic">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-logos/15.png" alt="Brand Logo 1"></a>
-                    <div><small class="truncate">Son del Duke</small></div>
-                </div>
+                <?php
+                    foreach($artistas as $a)
+                    {
+                        $ruta_img = _SERVER_ .'ecommerce/media/brand-logos/';
+                        $imagen = empty($a->art_imagen_logo)? $ruta_img.'default.jpg' : $ruta_img.$a->art_imagen_logo;
+                        echo '
+                            <div class="brand-pic">
+                                <a href="#"><img src="'.$imagen.'" alt="'.$a->art_nombre.'" title="'.$a->art_nombre.'"></a>
+                                <div><small class="truncate">'.$a->art_nombre.'</small></div>
+                            </div>';
+                    }
+                ?>
             </div>
         </div>
     </div>
@@ -357,7 +292,21 @@
         <div class="container">
             <div class="image-banner">
                 <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
-                    <img class="img-fluid" src="<?= _SERVER_?>ecommerce/media/banners/1.webp" alt="Winter Season Banner">
+                    <?php 
+                        if(empty($banner_top))
+                        {
+                            echo '<img class="img-fluid" src="'._SERVER_.'ecommerce/media/banners/defaulf.jpg" alt="Sin Imagen">';
+                        }
+                        else
+                        {
+                            foreach($banner_top as $b)
+                            {
+                                $ruta_img = _SERVER_ .'ecommerce/media/banners/';
+                                $imagen = empty($b->ban_nombre)? $ruta_img.'default.jpg' : $ruta_img.$b->ban_nombre;
+                                echo '<img class="img-fluid" src="'.$imagen.'" alt="'.$b->ban_nombre.'">';
+                            }
+                        }
+                    ?>
                 </a>
             </div>
         </div>
@@ -757,7 +706,21 @@
         <div class="container">
             <div class="image-banner">
                 <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
-                    <img class="img-fluid" src="<?= _SERVER_?>ecommerce/media/banners/2.jpg" alt="Banner Image">
+                    <?php 
+                        if(empty($banner_bottom))
+                        {
+                            echo '<img class="img-fluid" src="'._SERVER_.'ecommerce/media/banners/defaulf_2.png" alt="Sin Imagen">';
+                        }
+                        else
+                        {
+                            foreach($banner_bottom as $b)
+                            {
+                                $ruta_img = _SERVER_ .'ecommerce/media/banners/';
+                                $imagen = empty($b->ban_nombre)? $ruta_img.'defaulf_2.png' : $ruta_img.$b->ban_nombre;
+                                echo '<img class="img-fluid" src="'.$imagen.'" alt="'.$b->ban_nombre.'">';
+                            }
+                        }
+                    ?>
                 </a>
             </div>
         </div>
@@ -787,78 +750,21 @@
             </div>
             <!-- Outer-Footer /- -->
             <!-- Mid-Footer -->
-            <div class="mid-footer-wrapper u-s-p-b-40">
+            <div class="mid-footer-wrapper u-s-p-b-0">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                         <div class="footer-list">
                             <h6>CENTRO DE AYUDA</h6>
-                            <!-- <ul>
-                                <li>
-                                    <a href="faq.html">FAQs</a>
-                                </li>
-                                <li>
-                                    <a href="track-order.html">Track Order</a>
-                                </li>
-                                <li>
-                                    <a href="terms-and-conditions.html">Terms & Conditions</a>
-                                </li>
-                            </ul> -->
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                         <div class="footer-list">
-                            <h6>COMPANY</h6>
-                            <ul>
-                                <li>
-                                    <a href="home.html">Home</a>
-                                </li>
-                                <li>
-                                    <a href="about.html">About</a>
-                                </li>
-                                <li>
-                                    <a href="contact.html">Contact</a>
-                                </li>
-                            </ul>
+                            <h6>BLOG</h6>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                         <div class="footer-list">
-                            <h6>INFORMATION</h6>
-                            <ul>
-                                <li>
-                                    <a href="store-directory.html">Categories Directory</a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html">My Wishlist</a>
-                                </li>
-                                <li>
-                                    <a href="cart.html">My Cart</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <div class="footer-list">
-                            <h6>Address</h6>
-                            <ul>
-                                <li>
-                                    <i class="fas fa-location-arrow u-s-m-r-9"></i>
-                                    <span>819 Sugar Camp Road, West Concord, MN 55985</span>
-                                </li>
-                                <li>
-                                    <a href="tel:+923086561801">
-                                        <i class="fas fa-phone u-s-m-r-9"></i>
-                                        <span>+111-444-989</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="mailto:contact@domain.com">
-                                        <i class="fas fa-envelope u-s-m-r-9"></i>
-                                        <span>
-                                            contact@domain.com</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <h6>CONTACTANOS</h6>
                         </div>
                     </div>
                 </div>
@@ -866,6 +772,7 @@
             <!-- Mid-Footer /- -->
             <!-- Bottom-Footer -->
             <div class="bottom-footer-wrapper">
+                <img src="<?= _SERVER_?>ecommerce/media/main-logo/logo.png" alt="Groover Brand Logo" class="app-brand-logo pb-1">
                 <p class="copyright-text">Copyright &copy; 2025 <a href="home.html">Fact-Cloud</a> Todos los derechos reservados</p>
             </div>
         </div>
@@ -1130,7 +1037,7 @@ ga.l = +new Date;
 ga('create', 'UA-XXXXX-Y', 'auto');
 ga('send', 'pageview')
 </script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+<!-- <script src="https://www.google-analytics.com/analytics.js" async defer></script> -->
 <!-- Modernizr-JS -->
 <script type="text/javascript" src="<?= _SERVER_?>ecommerce/js/vendor/modernizr-custom.min.js"></script>
 <!-- NProgress -->
@@ -1159,5 +1066,6 @@ ga('send', 'pageview')
 <script type="text/javascript" src="<?= _SERVER_?>ecommerce/js/owl.carousel.min.js"></script>
 <!-- Main -->
 <script type="text/javascript" src="<?= _SERVER_?>ecommerce/js/app.js"></script>
+<script type="text/javascript" src="<?= _SERVER_?>ecommerce/views/home.js"></script>
 </body>
 </html>
