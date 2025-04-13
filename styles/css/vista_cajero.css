@@ -1,0 +1,38 @@
+.display
+{
+    z-index: 999;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+    text-align: center;
+}
+.display .efecto
+{
+line-height: 85px;
+color: #fff;
+font-size: 50px;
+font-weight: 600;
+letter-spacing: 1px;
+background: linear-gradient(135deg, #08dbc6, #d1bc03, #880078);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+animation: animate 5.5s linear infinite;
+}
+@keyframes animate 
+{
+    100%
+    {
+        filter: hue-rotate(360deg);
+    }
+}
+@media screen and (max-width: 750px) 
+{
+    #div_hora 
+    {
+        display: none;
+    }
+    #div_fecha 
+    {
+        display: none;
+    }
+}

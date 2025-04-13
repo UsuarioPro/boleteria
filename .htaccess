@@ -1,0 +1,30 @@
+# deny from all
+# IndexIgnore *
+Options -Indexes
+ErrorDocument 404 /sistema_facturacion/error/error_403
+ErrorDocument 403 /sistema_facturacion/error/error_403
+RewriteEngine On
+# RewriteRule ^connection/?$ app/views/error/error_db.php
+# RewriteRule ^connection/?$ index.php?c=Admin&a=error_database
+
+RewriteRule ^(\w+)/?$ index.php?c=$1
+RewriteRule ^(\w+)/(\w+)/?$ index.php?c=$1&a=$2
+# File Access Restricter
+# 1) Si NO es el anfitrión actual(masculino)
+RewriteCond %{HTTP_HOST}@@%{HTTP_REFERER} !^([^@]*)@@https?://\1/.*
+# # 2) Denegar el acceso a estos tipos
+# RewriteRule \.(gif|jpg|jpeg|png|tif|pdf|wav|wmv|wma|avi|mov|mp4|m4v|mp3|js|svg?)$ - [F]
+
+# php_value upload_max_filesize -1
+# php_value post_max_size -1
+# php_value memory_limit -1
+# php_value max_execution_time -1
+# php_value max_input_time -1
+# php_value max_file_uploads 1000 
+
+php_value upload_max_filesize 0
+php_value post_max_size 0
+php_value memory_limit -1
+php_value max_execution_time 0
+php_value max_input_time 0
+php_value max_file_uploads 1000
