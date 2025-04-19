@@ -44,6 +44,7 @@ function loginsistema(e)
             {
                 $("#btn_login").prop("disabled",true);
                 alerta_showLoading("<label id='titulo'>Espere un momento</label>", "<label id='mensaje'>Verificando Credenciales...<label>");
+                $('body').removeClass('swal2-height-auto');
             },
         }).done(function(data)
         {
@@ -51,7 +52,7 @@ function loginsistema(e)
             {
                 $("#titulo").html("Ingreso Exitoso");
                 $("#mensaje").html("Redireccionando...");
-                location.href =  urlweb + "Admin/dashboard";
+                location.href =  urlweb + "Tienda/home";
             }
             else if(data.rpta  == 1)
             {
@@ -59,10 +60,6 @@ function loginsistema(e)
                 $('#clavea').focus();
                 alerta_global('warning', data.mensaje);
             }
-            else if(data.rpta  == 'fail_licence')
-            {
-                location.href =  urlweb;
-            }    
             else
             {
                 $('#clavea').val(null);

@@ -31,13 +31,10 @@ $(function () {
 
     // Bind this plugin on Product `Detail` page
     $('#zoom-pro').elevateZoom({
-        gallery: 'gallery',
-        galleryActiveClass: 'active',
-        borderSize: 1,
-        zoomWindowWidth: 540,
-        zoomWindowHeight: 540,
-        zoomWindowOffetx: 10,
-        borderColour: '#e9e9e9',
+        zoomType: 'lens',
+        lensShape: 'round',
+        lensSize: 250,
+        scrollZoom: true,
     });
 
     // For `modals` we don't want to enable `zoom window`.

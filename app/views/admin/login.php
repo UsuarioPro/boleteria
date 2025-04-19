@@ -2,54 +2,57 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Fact-Cloud - Private Server</title>
-        <meta name="description" content="Desarrollando sistemas Informaticos">
-        <meta name="author" content="Fact-Cloud">
-        <meta name="robots" content="Fact-Cloud">
-        <!-- Icono -->
-        <link rel="apple-touch-icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
-        <link rel="shortcut icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
-
+        <title>Iniciar Sesion | TuBoleto</title>
+        <link href="<?= _SERVER_?>ecommerce/favicon.ico" rel="shortcut icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="<?= _SERVER_?>styles/fonts/mulish.css" rel="stylesheet">
         <link rel="stylesheet" href="<?= _SERVER_?>styles/css/login.css">
     </head>
     <body>
         <input type="hidden" id="urlweb" name="urlweb" value="<?= _SERVER_?>">
-        <div class="background"></div>
-        <div class="centering">
-            <form class="my-form" id="formulario" method="post">
-                <div class="login-welcome-row">
-                    <img class="login-welcome" src="<?= _SERVER_?>styles/img/login/cloud-server.png" alt="Astronaut">
-                    <h1>SERVIDOR PRIVADO</h1>
-                    <span>Inicie sesion para continuar...</span>
-                </div>
-                <div class="text-field">
-                    <label for="email">Nombre de Usuario:</label>
-                    <input type="text" id="logina" name="logina" placeholder="Ingrese el nombre de usuario">
-                    <img alt="Email Icon" title="Email Icon" src="<?= _SERVER_?>styles/img/login/user.png">
-                </div>
-                <div class="text-field">
-                    <label for="password">Contraseña:</label>
-                    <input id="clavea" type="password" name="clavea" placeholder="Ingrese la Contraseña">
-                    <img alt="Password Icon" title="Password Icon" src="<?= _SERVER_?>styles/img/login/lock.png">
-                </div>
-                <input type="submit" class="my-form__button" value="Ingresar" id="btn_login">
-                <div class="my-form__actions">
-                    <div class="my-form__signup">
-                        <a>Fact-Cloud - Desarrollando Sistemas Informaticos</a>
+        <div class="form-wrapper">
+            <main class="form-side">
+                <a href="#" title="Logo">
+                    <img src="<?= _SERVER_?>ecommerce/media/main-logo/logo.png" alt="Laplace Logo" class="logo" style="height: 30px;" >
+                </a>
+                <form class="my-form" id="formulario" method="post">
+                    <div class="form-welcome-row" style="margin-bottom: 0px;">
+                        <h1>¡Bienvenido de nuevo! &#128079;</h1>
+                        <h2>¡Inicia sesión con tu cuenta!</h2>
                     </div>
-                    <div class="my-form__signup">
-                    <!-- <a href="#" title="Create Account">Fact-Cloud</a> -->
-                    Copyright &copy; <?= date('Y') ?> - Version <?= version_proyecto ?>
+                    <div class="divider">
+                        <div class="divider-line"></div>
+                    </div>
+                    <div class="text-field">
+                        <label for="email">Usuario</label>
+                        <input type="text" id="logina" name="logina" placeholder="Ingrese el Usuario o el Correo" autocomplete="off">
+                    </div>
+                    <div class="text-field">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="clavea" name="clavea" placeholder="Contraseña">
+                    </div>
+                    <button class="my-form__button" type="submit" id="btn_login">
+                        Iniciar Sesion
+                    </button>
+                    <div class="my-form__actions">
+                        <div class="my-form__row">
+                            <span>¿No tienes una cuenta?</span>
+                            <a href="<?= _SERVER_ ?>Tienda/registrate" title="Reset Password">
+                                Regístrate ahora
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </main>
+            <aside class="info-side">
+                <div class="blockquote-wrapper">
+                    <img src="<?= _SERVER_?>styles/img/login/returns.png" alt="Returns" class="returns">
+                    <div class="" style="text-align: center; font-size: 50px;">
+                        <span class="author-name" style="color:red; font-weight: bold;">TU<span class="author-name">BOLETO</span></span>
                     </div>
                 </div>
-            </form>
+            </aside>
         </div>
-        <!-- jQuery -->
         <script src="<?= _SERVER_?>styles/plugins/jquery/jquery.min.js"></script>
-        <!-- jQuery UI 1.11.4 -->
-        <script src="<?= _SERVER_?>styles/plugins/jquery-ui/jquery-ui.min.js"></script>
         <!-- sweetalert2 -->
         <script src="<?= _SERVER_?>styles/plugins/sweetalert2/sweetalert2.all.min.js"></script>
         <script src="<?= _SERVER_?>styles/js/alerta_global.js" type="text/javascript" charset="utf-8" async defer></script>

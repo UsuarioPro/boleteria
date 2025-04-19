@@ -9,6 +9,7 @@ RewriteEngine On
 
 RewriteRule ^(\w+)/?$ index.php?c=$1
 RewriteRule ^(\w+)/(\w+)/?$ index.php?c=$1&a=$2
+RewriteRule ^(\w+)/(\w+)/(\w+)/?$ index.php?c=$1&a=$2&v=$3
 # File Access Restricter
 # 1) Si NO es el anfitrión actual(masculino)
 RewriteCond %{HTTP_HOST}@@%{HTTP_REFERER} !^([^@]*)@@https?://\1/.*
