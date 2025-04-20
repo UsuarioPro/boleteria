@@ -5,6 +5,13 @@ window.onload = function()
     llenar_card_cookies();
     mostrar_conciertos();
     $('#show-records').change(mostrar_conciertos);
+    $('#search-landscape').on('keypress', function(e) 
+    {
+        if (e.which === 13) { // 13 es el código de la tecla Enter
+            alerta_global('warning', 'Proximamente se Habiltara esta funcion');
+        }
+    });
+    $('#btn-search').click(function(){ alerta_global('warning', 'Proximamente se Habiltara esta funcion'); })
 }
 function mostrar_conciertos()
 {

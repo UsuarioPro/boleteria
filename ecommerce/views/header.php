@@ -102,11 +102,11 @@
                             </div>
                         </div>
                         <div class="col-lg-6 u-d-none-lg">
-                            <form class="form-searchbox">
+                            <div class="form-searchbox">
                                 <label class="sr-only" for="search-landscape">Search</label>
                                 <input id="search-landscape" type="text" class="text-field" placeholder="Buscar por Artista, Ciudad o Local">
-                                <button id="btn-search" type="submit" class="button button-primary fas fa-search"></button>
-                            </form>
+                                <button id="btn-search" type="button" class="button button-primary fas fa-search"></button>
+                            </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6">
                             <nav>

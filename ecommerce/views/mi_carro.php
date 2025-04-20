@@ -50,7 +50,7 @@
                         </div>
                         <div class="button-area">
                             <a href="<?= _SERVER_?>" class="continue">Continuar Comprando</a>
-                            <a href="checkout.html" class="checkout">Proceder a Pagar</a>
+                            <a href="<?= _SERVER_?>Tienda/proceder_pago/<?= $_SESSION['usu_id'] ?>" class="checkout">Proceder a Pagar</a>
                         </div>
                     </div>
                         <!-- Coupon /- -->

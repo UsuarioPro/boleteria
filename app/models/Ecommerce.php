@@ -167,6 +167,35 @@ class Ecommerce
         }
         return $result;
     }
+    public function guardar_venta_boleta($model)
+    {
+        $result = 2;
+        try 
+        {            
+            $sql = "INSERT INTO venta(usu_id, tipo_pago, ven_fecha, ven_total, ven_estado) VALUES (?,?,?,?,1)";
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([
+                $model->usu_id,
+                $model->tipo_pago,
+                date('Y-m-d H:i:s'),
+                $model->total,
+            ]);
+            $result = 1;
+        } 
+        catch (Exception $e)
+        {
+            if($e->getCode() == "23000")// Codigo 23000 Violación de la restricción de integridad: entrada duplicada
+            {
+                $result = 3;
+            }
+            else
+            {
+                $result = 2;
+                $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            }
+        }
+        return $result;
+    }
     //funcion para listar los datos
     public function listar_locales()
     {

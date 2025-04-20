@@ -120,7 +120,7 @@ function llenar_card_cookies()
 
 
         let html_tabla =
-        `<tr>
+        `<tr id="tabla_fila${item.con_id}_${item.zon_id}">
             <td>
                 <div class="cart-anchor-image">
                     <a href="${urlweb}Tienda/conciertos/${item.con_id}">
@@ -135,9 +135,9 @@ function llenar_card_cookies()
             <td>
                 <div class="cart-quantity">
                     <div class="quantity">
-                        <input type="text" class="quantity-text-field" value="${item.cantidad}">
-                        <a class="plus-a" data-max="10">&#43;</a>
-                        <a class="minus-a" data-min="1">&#45;</a>
+                        <input type="text" readonly  class="quantity-text-field" value="${item.cantidad}">
+                        <a hidden class="plus-a" data-max="10">&#43;</a>
+                        <a hidden class="minus-a" data-min="1">&#45;</a>
                     </div>
                 </div>
             </td>
@@ -146,7 +146,7 @@ function llenar_card_cookies()
             </td>
             <td>
                 <div class="action-wrapper">
-                    <button class="button button-outline-secondary fas fa-trash"></button>
+                    <button class="button button-outline-secondary fas fa-trash" onclick="removeFromCart('${item.con_id}', '${item.zon_id}');"></button>
                 </div>
             </td>
         </tr>`;
@@ -209,7 +209,12 @@ function removeFromCart(con_id, zon_id)
     setCookie('products_card', JSON.stringify(cart));
 
     $("#fila"+con_id+"_"+zon_id).remove();
+    $("#tabla_fila"+con_id+"_"+zon_id).remove();
     calcular_total();
+    if($('#tbl_carro tbody tr').length == 0)
+    {
+        location.reload();
+    }
 }
 function calcular_total()
 {

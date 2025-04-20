@@ -27,9 +27,24 @@ class TiendaController
     }
     public function cart_full()
     {    
-        require _VIEW_PATH_ECOMMERCE_ .'header.php';
-        require _VIEW_PATH_ECOMMERCE_ .'mi_carro.php';
-        require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        if (isset($_COOKIE['products_card'])) 
+        {
+            $productos = json_decode($_COOKIE['products_card'], true);
+            if (is_array($productos) && count($productos) === 0) 
+            {
+                require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
+            } 
+            else 
+            {
+                require _VIEW_PATH_ECOMMERCE_ .'header.php';
+                require _VIEW_PATH_ECOMMERCE_ .'mi_carro.php';
+                require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+            }
+        }
+        else
+        {
+            require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
+        }
     }
     public function editar_perfil()
     {
@@ -38,7 +53,6 @@ class TiendaController
         require _VIEW_PATH_ECOMMERCE_ .'header.php';
         require _VIEW_PATH_ECOMMERCE_ .'editar_usuario.php';
         require _VIEW_PATH_ECOMMERCE_ .'footer.php';
-
     }
     public function editar_pass()
     {
@@ -47,6 +61,29 @@ class TiendaController
         require _VIEW_PATH_ECOMMERCE_ .'header.php';
         require _VIEW_PATH_ECOMMERCE_ .'editar_pass.php';
         require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+    }
+    public function proceder_pago()
+    {
+        if (isset($_COOKIE['products_card'])) 
+        {
+            $productos = json_decode($_COOKIE['products_card'], true);
+            if (is_array($productos) && count($productos) === 0) 
+            {
+                require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
+            } 
+            else 
+            {
+                $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
+                $usuario = $this->ecommerce->obtener_datos_usuario($id_valor);
+                require _VIEW_PATH_ECOMMERCE_ .'header.php';
+                require _VIEW_PATH_ECOMMERCE_ .'proceso_compra.php';
+                require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+            }
+        }
+        else
+        {
+            require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
+        }
     }
     public function login()
     {
@@ -405,6 +442,33 @@ class TiendaController
             $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
             $rpta = 'error';
             $mensaje = 'Hubo un error Critico, Intente contactar con el administrador del sistema';        
+        }
+        echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
+    }
+    public function guardar_editar_comprar_entradas()
+    {
+        try
+        {
+            $model = new Ecommerce();
+            $model->usu_id = $_POST['usu_id'];
+            $model->total = $_POST['total'];
+            $model->tipo_pago = $_POST['tipo_pago'];
+            // $model->usu_num_doc = $_POST['tra_num_doc'];
+            // $model->usu_nombre_completo = $_POST['tra_nombre_completo'];
+            // $model->usu_direccion = $_POST['tra_direccion'];
+            // $model->usu_correo = $_POST['tra_correo'];
+            // $model->usu_telefono = $_POST['tra_telefono'];    
+            $result = $this->ecommerce->guardar_venta_boleta($model);
+
+            $rpta = ($result == 1)? "ok" : "error";
+            $mensaje = ($result == 1)? "La Compra se Realizo con Exito"  : "No se pudo actualizar el registro, Intente contactar con el administrador del sistema";
+            // $result ? $this->bitacora->guardar('Editó Usuario con ID:'.$model->usu_id, 'ok') : $this->bitacora->guardar('Error en editar Usuario con ID:'.$model->usu_id, 'error');
+        }
+        catch (Throwable $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $rpta = 'error';
+            $mensaje = 'Hubo un error Critico, Intente contactar con el administrador del sistema';
         }
         echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
     }
