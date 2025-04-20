@@ -243,6 +243,8 @@ function guardar_editar(e) //funcion para guardar o editar
                             else 
                             { 
                                 alerta_global("success",data.mensaje); 
+                                removeCookie('products_card');
+                                window.location.href = urlweb + "Tienda/exito";
                             }
                         }).always(function() 
                         {

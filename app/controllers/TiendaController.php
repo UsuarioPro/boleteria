@@ -46,6 +46,10 @@ class TiendaController
             require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
         }
     }
+    public function exito()
+    {    
+        require _VIEW_PATH_ECOMMERCE_ .'exito_compra.php';
+    }
     public function editar_perfil()
     {
         $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
@@ -453,11 +457,11 @@ class TiendaController
             $model->usu_id = $_POST['usu_id'];
             $model->total = $_POST['total'];
             $model->tipo_pago = $_POST['tipo_pago'];
-            // $model->usu_num_doc = $_POST['tra_num_doc'];
-            // $model->usu_nombre_completo = $_POST['tra_nombre_completo'];
-            // $model->usu_direccion = $_POST['tra_direccion'];
-            // $model->usu_correo = $_POST['tra_correo'];
-            // $model->usu_telefono = $_POST['tra_telefono'];    
+            $model->con_id = $_POST['con_id'];
+            $model->zon_id = $_POST['zon_id'];
+            $model->precio = $_POST['precio'];
+            $model->cantidad = $_POST['cantidad'];
+
             $result = $this->ecommerce->guardar_venta_boleta($model);
 
             $rpta = ($result == 1)? "ok" : "error";

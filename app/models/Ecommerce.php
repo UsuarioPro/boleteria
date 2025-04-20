@@ -167,6 +167,28 @@ class Ecommerce
         }
         return $result;
     }
+    public function obtener_ultima_venta_id()//funcion para poner en estado ocupado la mesa
+    {
+        $result = 0;
+        try
+        {
+            $ven_id = $this->pdo->prepare('select ven_id from venta order by ven_id desc LIMIT 1');
+            $ven_id->execute();
+            $result = $ven_id->fetch();
+        }
+        catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
+    function generarCodigoBoleta($idBoleto) 
+    {
+        $prefijo = 'BOL'; // Puedes cambiarlo a lo que quieras
+        $fecha = date('YmdHis'); // Fecha y hora actual
+        $random = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 5)); // Cadena aleatoria
+        return "{$prefijo}-{$fecha}-{$idBoleto}-{$random}";
+    }
     public function guardar_venta_boleta($model)
     {
         $result = 2;
@@ -180,6 +202,39 @@ class Ecommerce
                 date('Y-m-d H:i:s'),
                 $model->total,
             ]);
+            $ven_id = $this->obtener_ultima_venta_id();
+
+            for($i = 0; $i < count($model->con_id); $i++)
+            {
+                $sql = "INSERT INTO detalle_venta(ven_id, zon_id, con_id, cantidad, precio_unitario, total) VALUES (?,?,?,?,?,?)";
+                $stm = $this->pdo->prepare($sql);
+                $stm->execute([
+                    $ven_id->ven_id,
+                    $model->zon_id[$i],
+                    $model->con_id[$i],
+                    $model->cantidad[$i],
+                    $model->precio[$i],
+                    $model->precio[$i] * $model->cantidad[$i],
+                ]);
+
+                // Obtener el último ID insertado
+                $ultimo_id = $this->pdo->lastInsertId();
+                // Ejemplo de uso
+                $idBoleto = strtoupper(uniqid('BOL')); // Esto vendría de tu insert
+                $codigo = $this->generarCodigoBoleta($idBoleto);
+
+                // $sql_bol = "INSERT INTO boleto(det_ven_id, con_id, zon_id, codigo_unico, bol_cant_personas, estado) VALUES (?,?,?,?,?,1)";
+                $sql_bol = "INSERT INTO boleto(det_ven_id, codigo_unico, bol_cant_personas, estado) VALUES (?,?,?,1)";
+                $stm_bol = $this->pdo->prepare($sql_bol);
+                $stm_bol->execute([
+                    $ultimo_id,
+                    // $model->con_id[$i],
+                    // $model->zon_id[$i],
+                    $codigo,
+                    $model->cantidad[$i],
+                ]);
+
+            }
             $result = 1;
         } 
         catch (Exception $e)
@@ -193,6 +248,7 @@ class Ecommerce
                 $result = 2;
                 $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
             }
+            
         }
         return $result;
     }

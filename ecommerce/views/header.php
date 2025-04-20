@@ -66,6 +66,11 @@
                                                     Cambiar Contraseña</a>
                                             </li>
                                             <li>
+                                                <a href="'._SERVER_.'Tienda/mis_boletos/'.$_SESSION['usu_id'].'">
+                                                    <i class="fas fa-ticket-alt u-s-m-r-9"></i>
+                                                    Mis Boletos</a>
+                                            </li>
+                                            <li>
                                                 <a href="'._SERVER_.'Admin/salir">
                                                     <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                                     Cerrar Sesion</a>
