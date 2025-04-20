@@ -70,6 +70,37 @@ window.onload = function()
         alerta_global('warning', 'El Producto ya se encuentra en Carrito de Ventas');
     }
   })
+  $('.btn_carro_comprar').click(function ()
+  {
+    let cantidad = $('#cantidad'+$(this).attr('data_indice')).val();
+    let img_logo = ($(this).attr('data_imagen') == '')? urlweb + 'ecommerce/media/conciertos-logo/default.jpg' : urlweb + 'ecommerce/media/conciertos-logo/'+$(this).attr('data_imagen');
+
+    let data = { con_id: $(this).attr('data_con_id'), zon_id: $(this).attr('data_id'), nombre: $(this).attr('data_nombre'), precio: $(this).attr('data_precio'),
+    detalle: $(this).attr('data_detalle'), stock: $(this).attr('data_stock'), concierto_nombre: $(this).attr('data_concierto_nombre'), imagen: $(this).attr('data_imagen'),
+    ruta_imagen : img_logo, cantidad : cantidad };
+    if(validar_producto_repetido(data.con_id, data.zon_id) === false)
+      {
+        let total = (data.precio * data.cantidad).toFixed(2);
+        html = `
+        <li class="clearfix" id="fila${data.con_id}_${data.zon_id}">
+          <input type="hidden" name="con_id[]" value="${data.con_id}">
+          <input type="hidden" name="zon_id[]" value="${data.zon_id}">
+          <input type="hidden" name="precio[]" value="${data.precio}">
+          <input type="hidden" name="cantidad[]" value="${data.cantidad}">
+          <a href="#">
+              <img src="${data.ruta_imagen}" alt="Product">
+              <span class="mini-item-name">${data.concierto_nombre}</span>
+              <span class="mini-item-price">${data.nombre} <br> S/. ${data.precio} x ${data.cantidad} - Total: ${total} </span> <br>
+              <span class="mini-item-quantity"> Det: ${data.detalle}</span>
+          </a>
+          <button type="button" class="button button-outline-secondary fas fa-trash" onclick="removeFromCart('${data.con_id}', '${data.zon_id}');" style="width: 100%"></button>
+          </li>`;
+          $('#mini_car').append(html);
+          addToCart(data);        
+          calcular_total();
+      }
+      window.location.href =  urlweb + "Tienda/cart_full";
+  })
 }
 function llenar_card_cookies()
 {

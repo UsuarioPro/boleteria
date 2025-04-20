@@ -27,23 +27,30 @@ class TiendaController
     }
     public function cart_full()
     {    
-        if (isset($_COOKIE['products_card'])) 
+        if(!isset($_SESSION['usu_id']))
         {
-            $productos = json_decode($_COOKIE['products_card'], true);
-            if (is_array($productos) && count($productos) === 0) 
-            {
-                require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
-            } 
-            else 
-            {
-                require _VIEW_PATH_ECOMMERCE_ .'header.php';
-                require _VIEW_PATH_ECOMMERCE_ .'mi_carro.php';
-                require _VIEW_PATH_ECOMMERCE_ .'footer.php';
-            }
+            require _VIEW_PATH_ECOMMERCE_ .'mensaje_iniciar_sesion.php';
         }
         else
         {
-            require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
+            if (isset($_COOKIE['products_card'])) 
+            {
+                $productos = json_decode($_COOKIE['products_card'], true);
+                if (is_array($productos) && count($productos) === 0) 
+                {
+                    require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
+                } 
+                else 
+                {
+                    require _VIEW_PATH_ECOMMERCE_ .'header.php';
+                    require _VIEW_PATH_ECOMMERCE_ .'mi_carro.php';
+                    require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+                }
+            }
+            else
+            {
+                require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
+            }
         }
     }
     public function exito()

@@ -101,9 +101,10 @@
                                                 <input type="text" class="qty form-control mx-2" value="1" readonly id="cantidad'.$i.'" name="vip_qty">
                                                 <button class="btn btn-secondary btn-sumar" style="border-radius: 0px;">+</button>
                                             </div>
-                                            <button class="btn btn-buy mr-2" onclick="registrar_producto_carrito()" >Comprar <span class="cantidad-texto">1</span></button>
+                                            <button class="btn btn-buy mr-2 btn_carro_comprar" data_id="'.$z->zon_id.'" data_nombre="'.$z->zon_nombre.'" data_precio="'.$z->zon_precio.'" data_imagen="'.$concierto->con_imagen.'" 
+                                                data_indice="'.$i.'" data_con_id="'.$concierto->con_id.'" data_concierto_nombre="'.$concierto->con_nombre.'" data_detalle="'.$z->zon_detalle.'" data_stock="'.$z->zon_stock.'">Comprar <span class="cantidad-texto">1</span></button>
                                             <button class="btn btn-cart mr-2 btn_carro" data_id="'.$z->zon_id.'" data_nombre="'.$z->zon_nombre.'" data_precio="'.$z->zon_precio.'" data_imagen="'.$concierto->con_imagen.'" 
-                                                data_indice="'.$i.'" data_con_id="'.$concierto->con_id.'" data_concierto_nombre="'.$concierto->con_nombre.'"  data_detalle="'.$z->zon_detalle.'" data_stock="'.$z->zon_stock.'"><i class="fas fa-shopping-cart"></i></button>
+                                                data_indice="'.$i.'" data_con_id="'.$concierto->con_id.'" data_concierto_nombre="'.$concierto->con_nombre.'" data_detalle="'.$z->zon_detalle.'" data_stock="'.$z->zon_stock.'"><i class="fas fa-shopping-cart"></i></button>
                                             <button class="btn btn-danger btn-cerrar"><i class="far fa-window-close"></i></button>
                                         </div>
                                     </div>
