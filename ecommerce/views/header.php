@@ -37,7 +37,7 @@
         <header>
             <!-- Top-Header -->
             <div class="full-layer-outer-header my_sticky-top">
-                <input type="hidden" id="urlweb" name="urlweb" value="<?= _SERVER_?>">
+                <!-- <input type="hidden" id="urlweb" name="urlweb" value="<?= _SERVER_?>"> -->
                 <div class="container clearfix">
                     <nav>
                         <ul class="secondary-nav g-nav">

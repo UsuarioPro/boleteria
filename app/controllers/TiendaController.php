@@ -25,6 +25,22 @@ class TiendaController
         require _VIEW_PATH_ECOMMERCE_ .'home.php';
         require _VIEW_PATH_ECOMMERCE_ .'footer.php';
     }
+    public function mis_boletos()
+    {    
+        if(!isset($_SESSION['usu_id']))
+        {
+            require _VIEW_PATH_ECOMMERCE_ .'mensaje_iniciar_sesion.php';
+        }
+        else
+        {
+            $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
+            $mis_boletos = $this->ecommerce->obtener_mis_boletos($id_valor);
+    
+            require _VIEW_PATH_ECOMMERCE_ .'header.php';
+            require _VIEW_PATH_ECOMMERCE_ .'mis_boletos.php';
+            require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        }
+    }
     public function cart_full()
     {    
         if(!isset($_SESSION['usu_id']))

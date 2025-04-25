@@ -1,4 +1,3 @@
-let urlweb = $('#urlweb').val();
 window.onload = function()
 {
   llenar_card_cookies();

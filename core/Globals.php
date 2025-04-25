@@ -6,7 +6,7 @@
     define('_PASSWORD_DB_', '');
     // --------------------------------------------------
     //name project
-    define('_NAME_PROJECT_', 'tedy');
+    define('_NAME_PROJECT_', '');
     //Servidor
     define('_SERVER_', 'http://localhost:8081/boleteria/');
     //Servidor Socket

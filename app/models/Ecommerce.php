@@ -253,6 +253,30 @@ class Ecommerce
         return $result;
     }
     //funcion para listar los datos
+    public function obtener_mis_boletos($usu_id)
+    {
+        $result = [];
+        try 
+        {
+            $stm = $this->pdo->prepare('SELECT b.bol_id, b.det_ven_id, b.codigo_unico, 
+            b.bol_cant_personas, b.estado, d.precio_unitario, 
+            d.zon_id, d.con_id, z.zon_nombre, z.zon_detalle, 
+            c.con_nombre, c.con_subtitulo,c.con_descripcion, 
+            c.con_fecha, c.con_hora FROM boleto AS b
+                INNER JOIN detalle_venta as d ON d.det_ven_id = b.det_ven_id
+                INNER JOIN venta as v ON d.ven_id = v.ven_id
+                INNER JOIN zona_concierto as z ON z.zon_id = d.zon_id
+                INNER JOIN concierto as c ON c.con_id = d.con_id WHERE v.usu_id = ?');
+            $stm->execute([$usu_id]);
+            $result = $stm->fetchAll();
+        } 
+        catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
+    //funcion para listar los datos
     public function listar_locales()
     {
         $result = [];
@@ -325,7 +349,7 @@ class Ecommerce
             try 
             {
                 $sql = "SELECT c.con_id, c.loc_id, c.cat_id, c.con_nombre, c.con_descripcion , c.con_fecha, c.con_hora, c.con_estado, 
-                ca.cat_nombre, l.loc_nombre, l.loc_direccion, l.loc_ciudad
+                ca.cat_nombre, l.loc_nombre, l.loc_direccion, l.loc_ciudad, c.con_imagen
                 FROM concierto as c
                 INNER JOIN local as l ON l.loc_id = c.loc_id
                 INNER JOIN categoria as ca ON ca.cat_id = c.cat_id  WHERE c.con_estado = 0 $filtro_ciu $filtro ORDER BY con_fecha, con_hora ASC $sLimit";

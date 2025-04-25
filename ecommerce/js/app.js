@@ -15,6 +15,7 @@
  * $(function() { ... }) is also jQuery short-hand for
  * $(document).ready(function() { ... });
  */
+let urlweb = 'http://localhost:8081/boleteria/';
 $(function () {
 
     // Initialize NProgress

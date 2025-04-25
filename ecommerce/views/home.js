@@ -1,5 +1,4 @@
 //funcion que se ejecuta al cargar la pagina
-let urlweb = $('#urlweb').val();
 window.onload = function()
 {
     llenar_card_cookies();
