@@ -241,3 +241,48 @@ function listar_datatable()
         setTimeout(() => { tippy('.tooltip_tippy', {content: '', arrow: true, allowHTML: true}); }, 10);
     } );
 }
+function exportar_reporte(tipo_reporte)
+{
+    if(tipo_reporte == 'pdf')
+    {
+        generar_documento();
+    }
+}
+function generar_documento() //modal de pregunta del reporte
+{
+    $.ajax({
+        url : urlweb + '?c=ReporteVenta&a=generar_documento',
+        type : 'POST',
+        data : {
+                "filtro_cliente": $('#filtro_cliente').val(), 
+                "select_filtro" : $('#filtro_tiempo').val(), 
+                'filtro_fecha_inicio' : rango_fecha_inicio, 'filtro_fecha_fin' : rango_fecha_fin
+            },
+        dataType: 'json',
+        beforeSend: function()
+        {
+            alerta_showLoading('Espere un momento', 'Generando documento...')
+        },
+    }).done(function(data)
+    {
+        if(data.rpta == true)
+        {
+            var $a = $("<a>");
+            $a.attr("href",data.file);
+            $("body").append($a);
+            $a.attr("download", data.name);
+            $a[0].click();
+            $a.remove();
+            alerta_global('success', data.mensaje)
+        }
+        else
+        {
+            alerta_global('error', data.mensaje)
+        }
+    }).always(function()
+    {
+    }).fail(function(jqXHR, textStatus, errorThrown)
+    {
+        alerta_global("error",mensaje_error_ajax);
+    });
+}
