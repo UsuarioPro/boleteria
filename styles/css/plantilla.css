@@ -176,6 +176,12 @@ td img
     border-radius: 100%;
     border: 5px solid #e6e7e8;
 }
+td img.portada {
+    height: 60px;
+    width: 160px;
+    border-radius: 0%;
+    border: 5px solid #e6e7e8;
+}
 tr:hover td 
 {
     color: #6027e1;

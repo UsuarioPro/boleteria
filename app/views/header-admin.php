@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FACT-CLOUD - Desarrollando sistemas Informaticos</title>
+    <title>TUBOLETA</title>
     <!-- Icono -->
     <link rel="apple-touch-icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
     <link rel="shortcut icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
@@ -73,7 +73,7 @@
     <link rel="stylesheet" href="<?= _SERVER_?>styles/css/reloj.css">
   </head>
   <?php  $thema_body = (isset($_COOKIE['dark_mode']))? 'dark-mode' : ''; ?>
-  <body class="hold-transition sidebar-mini layout-top-nav layout-fixed layout-navbar-fixed layout-footer-fixed text-sm pace-primary <?= $thema_body?>">
+  <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed text-sm pace-primary <?= $thema_body?>">
     <div class="overlay-wrapper">
         <div class="overlay" id="overlay_general" style="z-index: 2000;">
             <div class="text-center">

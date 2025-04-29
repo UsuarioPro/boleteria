@@ -1,4 +1,4 @@
-let urlweb = "http://localhost:8081/file_manager/";
+let urlweb = "http://localhost:8081/boleteria/";
 
 let tamano_datatable_normal = 'calc(100vh - 320px)';
 let tamano_datatable_ssm = 'calc(100vh - 348px)';

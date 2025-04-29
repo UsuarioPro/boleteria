@@ -14,16 +14,27 @@ class TiendaController
     }
     public function home()
     {
-        $locales = $this->ecommerce->listar_locales();
-        $categorias = $this->ecommerce->listar_categoria();
-        $artistas = $this->ecommerce->listar_artistas();
-        $banner_top = $this->ecommerce->listar_banners(1);
-        $banners = $this->ecommerce->listar_banners(2);
-        $banner_bottom = $this->ecommerce->listar_banners(3);
+        if($_SESSION['rol_id'] == 1)
+        {
+            require_once _VIEW_PATH_ . 'header-admin.php';
+            require_once _VIEW_PATH_ . 'navbar-admin.php';
+            require_once _VIEW_PATH_ . 'admin/index.php';
+            require_once _VIEW_PATH_ . 'footer-admin.php';
     
-        require _VIEW_PATH_ECOMMERCE_ .'header.php';
-        require _VIEW_PATH_ECOMMERCE_ .'home.php';
-        require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        }
+        else
+        {
+            $locales = $this->ecommerce->listar_locales();
+            $categorias = $this->ecommerce->listar_categoria();
+            $artistas = $this->ecommerce->listar_artistas();
+            $banner_top = $this->ecommerce->listar_banners(1);
+            $banners = $this->ecommerce->listar_banners(2);
+            $banner_bottom = $this->ecommerce->listar_banners(3);
+        
+            require _VIEW_PATH_ECOMMERCE_ .'header.php';
+            require _VIEW_PATH_ECOMMERCE_ .'home.php';
+            require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        }
     }
     public function mis_boletos()
     {    

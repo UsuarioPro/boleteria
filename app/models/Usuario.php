@@ -65,29 +65,6 @@ class Usuario{
                     $model->usu_telefono, 
                     $model->usu_correo
                 ]);
-                if($model->rol_id != 1)
-                {
-                    $cid = $this->generateToken();    
-                    $lastId = $this->pdo->lastInsertId();// Obtener el ID insertado
-                    $targetDirCreate = 'files/.'.$lastId.'-'.substr($cid, 0, 8);
-
-                    $sql_up = "UPDATE usuario SET usu_token= ? WHERE usu_id = ?";
-                    $stm_up = $this->pdo->prepare($sql_up);
-                    $stm_up->execute([$cid, $lastId]);
-	
-                    $sql = 'INSERT INTO folders_and_files(fol_tipo, fol_fld, fol_url, fol_nombre, fol_extension, fol_id_user, fol_cid) VALUES (?,?,?,?,?,?,?)';
-                    $stm = $this->pdo->prepare($sql);
-                    $stm->execute([
-                        0,
-                        'root',
-                        $targetDirCreate,
-                        '.'.$model->usu_nombre_completo, 
-                        'share',
-                        $lastId,
-                        $cid,
-                    ]);
-                    mkdir($targetDirCreate);
-                }
             } 
             //si existe entonces el dato se actualiza
             else 
@@ -106,13 +83,6 @@ class Usuario{
                     $model->usu_telefono, 
                     $model->usu_correo,
                     $model->usu_id,
-                ]);
-                $sql = "UPDATE folders_and_files SET fol_nombre= ? WHERE fol_id_user = ? and fol_cid = ?";
-                $stm = $this->pdo->prepare($sql);
-                $stm->execute([
-                    '.'.$model->usu_nombre_completo, 
-                    $model->usu_id,
-                    $model->usu_token,
                 ]);
             }
             $result = 1;

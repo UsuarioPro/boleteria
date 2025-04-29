@@ -33,6 +33,6 @@ const option_FilePondImage =
     imagePreviewHeight: '350px',
     maxFileSize: "3100KB",
     // stylePanelAspectRatio: '0.90',
-    acceptedFileTypes: ['image/png'],
+    acceptedFileTypes: ['image/png','image/jpeg','image/jpg'],
 }
 FilePond.setOptions(option_FilePond);

@@ -4,7 +4,6 @@
     define('_DB_', 'tienda_ticket');
     define('_USER_DB_', 'root');
     define('_PASSWORD_DB_', '');
-    // --------------------------------------------------
     //name project
     define('_NAME_PROJECT_', '');
     //Servidor
@@ -19,9 +18,9 @@
     define("APP_C",'app/controllers/');
     // ruta para acceder a las vistas
     define('_VIEW_PATH_ECOMMERCE_', 'ecommerce/views/');
-
     //definimos la variable de la version del proyecto
     define("version_proyecto",'1.2.0');
-    //DEFINIMOS EL TIEMPO DE LA COOKE
-    define('_TIEMPO_COOKIE_', 365 * 24 * 60 * 60); //dias / horas / min / seg
+    define("_ULTIMA_COMPILACION_",'23/04/2025'); //definimos la variable de la version del proyecto
+    define('_TIEMPO_COOKIE_', 365 * 24 * 60 * 60); //dias / horas / min / seg //DEFINIMOS EL TIEMPO DE LA COOKE
+    define('_NOMBRE_EMPRESA_', 'FACT-CLOUD'); //dias / horas / min / seg //DEFINIMOS EL TIEMPO DE LA COOKE
 ?>

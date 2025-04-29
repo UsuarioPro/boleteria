@@ -4,7 +4,6 @@ require_once 'app/models/Navbar.php';
 require_once 'app/models/Admin.php';
 require_once 'app/models/Rol.php';
 require_once 'app/models/Bitacora.php';
-require_once 'app/models/IconManager.php';
 class AdminController
 {
     private $navbar;
@@ -12,7 +11,6 @@ class AdminController
     private $admin;
     private $bitacora;
     private $rol;
-    private $iconManager;
     public function __construct()
     {
         $this->navbar = new Navbar();
@@ -24,17 +22,20 @@ class AdminController
     //funcion que muestra la vista para el admin general al inicar app web
     public function dashboard() 
     {
-        $opc_modulo = $this->navbar->obtener_opcion_modulo($_GET['c']);
-        $modulo = $opc_modulo->mod_nombre;
-
-        $modulos = $this->navbar->obtener_modulos();
-        $modulos_rol = $this->navbar->obtener_modulos_rol($_SESSION['rol_id']);
-        $permisos_usuario = $this->navbar->obtener_permisos_rol($_SESSION['rol_id']);
-
-        require_once _VIEW_PATH_ . 'header-admin.php';
-        require_once _VIEW_PATH_ . 'navbar-admin.php';
-        require_once _VIEW_PATH_ . 'admin/index.php';
-        require_once _VIEW_PATH_ . 'footer-admin.php';
+        if($_SESSION['rol_id'] == 1)
+        {
+            $opc_modulo = $this->navbar->obtener_opcion_modulo($_GET['c']);
+            $modulo = $opc_modulo->mod_nombre;
+    
+            $modulos = $this->navbar->obtener_modulos();
+            $modulos_rol = $this->navbar->obtener_modulos_rol($_SESSION['rol_id']);
+            $permisos_usuario = $this->navbar->obtener_permisos_rol($_SESSION['rol_id']);
+    
+            require_once _VIEW_PATH_ . 'header-admin.php';
+            require_once _VIEW_PATH_ . 'navbar-admin.php';
+            require_once _VIEW_PATH_ . 'admin/index.php';
+            require_once _VIEW_PATH_ . 'footer-admin.php';
+        } 
     }
     public function login()
     {
