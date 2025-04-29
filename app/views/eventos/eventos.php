@@ -132,6 +132,49 @@
                                                         <tbody>
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                                <div class="form-group col-12 mb-0">
+                                                    <div class="row">
+                                                        <div class="form-group mt-2 mb-2 col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-primary p-2">
+                                                            <label class="mb-0">Agregar Zonas y sus Precios</label>
+                                                        </div>
+                                                        <div class="form-group col-sm-3">
+                                                            <label>Nombre Zona</label><label class="text-red">(*)</label>
+                                                            <input type="text" class="form-control rounded-0 validacion_mayuscula" name="nombre_zona" id="nombre_zona" placeholder="Nombre Zona">
+                                                        </div>
+                                                        <div class="form-group col-sm-3">
+                                                            <label>Descripcion Zona</label><label class="text-red">(*)</label>
+                                                            <input type="text" class="form-control rounded-0 validacion_mayuscula" name="descripcion_zona" id="descripcion_zona" placeholder="Descripcion Zona">
+                                                        </div>
+                                                        <div class="form-group col-sm-3">
+                                                            <label>Precio Zona</label><label class="text-red">(*)</label>
+                                                            <input type="text" class="form-control rounded-0 validacion_decimal" name="precio_zona" id="precio_zona" placeholder="Precio Zona">
+                                                        </div>
+                                                        <div class="form-group col-sm-3">
+                                                            <label>Stock Zona</label><label class="text-red">(*)</label>
+                                                            <input type="text" class="form-control rounded-0 validacion_decimal" name="stock_zona" id="stock_zona" placeholder="Stock Zona">
+                                                        </div>
+                                                        <div class="form-group col-sm-12 pt-0 mt-0">
+                                                            <a id="btn_agregar_zona" style="margin-top: -10px;" type="button" class="btn btn-success text-bold float-right">[ + AGREGAR ZONA - PRECIO ]</a>
+                                                        </div>
+                                                    </div>
+                                                    <table id="tbl_zonas" class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th colspan="5" class="text-center">ZONAS - PRECIOS</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Nombre Zona</th>
+                                                                <th>Precio</th>
+                                                                <th>Stock</th>
+                                                                <th>Descripcion</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer pb-1 pt-1">

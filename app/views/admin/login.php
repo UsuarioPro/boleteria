@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Iniciar Sesion | TuBoleto</title>
-        <link href="<?= _SERVER_?>ecommerce/favicon.ico" rel="shortcut icon">
+        <link rel="apple-touch-icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
+        <link rel="shortcut icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<?= _SERVER_?>styles/css/login.css">
     </head>
@@ -12,7 +13,7 @@
         <div class="form-wrapper">
             <main class="form-side">
                 <a href="#" title="Logo">
-                    <img src="<?= _SERVER_?>ecommerce/media/main-logo/logo.png" alt="Laplace Logo" class="logo" style="height: 30px;" >
+                    <img src="<?= _SERVER_?>styles/img/iconos_sistema/logo.png" alt="Laplace Logo" class="logo" style="height: 30px;" >
                 </a>
                 <form class="my-form" id="formulario" method="post">
                     <div class="form-welcome-row" style="margin-bottom: 0px;">
@@ -36,7 +37,7 @@
                     <div class="my-form__actions">
                         <div class="my-form__row">
                             <span>¿No tienes una cuenta?</span>
-                            <a href="<?= _SERVER_ ?>Tienda/registrate" title="Reset Password">
+                            <a href="<?= _SERVER_ ?>Admin/registrate" title="Reset Password">
                                 Regístrate ahora
                             </a>
                         </div>

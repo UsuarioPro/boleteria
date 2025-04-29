@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Registrate | TuBoleto</title>
-        <link href="<?= _SERVER_?>ecommerce/favicon.ico" rel="shortcut icon">
+        <link rel="apple-touch-icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
+        <link rel="shortcut icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<?= _SERVER_?>styles/css/login.css">
     </head>
@@ -20,7 +21,7 @@
             </aside>
             <main class="form-side">
                 <a href="#" title="Logo">
-                    <img src="<?= _SERVER_?>ecommerce/media/main-logo/logo.png" alt="Laplace Logo" class="logo_right" style="height: 30px;" >
+                    <img src="<?= _SERVER_?>styles/img/iconos_sistema/logo.png" alt="Laplace Logo" class="logo_right" style="height: 30px;" >
                 </a>
                 <form class="my-form" id="formulario" name="formulario" method="post">
                     <div class="form-welcome-row" style="margin-bottom: 0px;">
@@ -53,7 +54,7 @@
                     <div class="my-form__actions" style="margin-top: -8px;">
                         <p style="font-size: 12px;">Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web, gestionar el acceso a tu cuenta y otros propósitos descritos en nuestra <a href="#" class="woocommerce-privacy-policy-link" target="_blank">política de privacidad</a>.</p>
                         <div class="my-form__row">
-                            <a href="<?= _SERVER_ ?>Tienda/login" title="Iniciar Sesion">
+                            <a href="<?= _SERVER_ ?>Admin/login" title="Iniciar Sesion">
                                 ¿ Tienes una Cuenta ? -  Iniciar Sesion
                             </a>
                         </div>

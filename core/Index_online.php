@@ -27,8 +27,7 @@ if (!isset($_GET['c']) && !isset($_GET['a']))
     }
     else 
     {
-        header('Location: ' ._SERVER_. 'Tienda/home');
-        // header('Location: ' ._SERVER_. 'Admin/dashboard');        
+        header('Location: ' ._SERVER_. 'Admin/dashboard');        
     }
 }
 else

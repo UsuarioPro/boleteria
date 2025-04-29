@@ -36,10 +36,18 @@ class AdminController
             require_once _VIEW_PATH_ . 'admin/index.php';
             require_once _VIEW_PATH_ . 'footer-admin.php';
         } 
+        else
+        {
+            header("Location: "._SERVER_."Tienda/home");
+        }
     }
     public function login()
     {
         require _VIEW_PATH_ . 'admin/login.php';
+    }
+    public function registrate()
+    {
+        require _VIEW_PATH_ . 'admin/registrate.php';
     }
     public function conciertos()
     {
@@ -49,7 +57,6 @@ class AdminController
     {
         $usuario = isset($_POST['logina'])?$_POST['logina']: null;
         $pass = isset($_POST['clavea'])?$_POST['clavea']: null;
-        $rol = '';
         if(!empty($usuario) && !empty($pass))
         {
             $model = $this->admin->loguear($usuario);
@@ -114,5 +121,27 @@ class AdminController
             $this->accion_salir();
             header('Location: ' ._SERVER_);
         }
+    }
+    public function registrarse()
+    {
+        try
+        {
+            $model = new Admin();
+            $model->rol_id = 2;
+            $model->usu_nombre = $_POST['logina'];
+            $model->usu_contrasena = password_hash($_POST['clavea'],PASSWORD_DEFAULT);
+            $model->usu_correo = $_POST['correo'];
+            $result = $this->admin->registrarse($model);
+
+            $rpta = ($result == 1)? "ok" : $rpta = ($result == 3)? 'unico': "error";
+            $mensaje = ($result == 1)? "Registro Guardado Correctamente" : $mensaje = ($result == 3)? 'Este Nombre de Usuario o el Correo ya se encuentra registrado, intente con otro Nombre de Usuario' : "No se pudo guardar el registro, Intente contactar con el administrador del sistema";
+        }
+        catch (Throwable $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $rpta = 'error';
+            $mensaje = 'Hubo un error Critico, Intente contactar con el administrador del sistema';
+        }
+        echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
     }
 }

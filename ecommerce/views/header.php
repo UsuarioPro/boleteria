@@ -7,7 +7,8 @@
         <meta name="author" content="">
         <title>TuBoleto</title>
         <!-- Standard Favicon -->
-        <link href="<?= _SERVER_?>ecommerce/favicon.ico" rel="shortcut icon">
+        <link rel="apple-touch-icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
+        <link rel="shortcut icon" href="<?= _SERVER_?>styles/img/iconos_sistema/faviconEmpresa.ico">
         <!-- Base Google Font for Web-app -->
         <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
         <!-- Google Fonts for Banners only -->
@@ -83,10 +84,10 @@
                                 {
                                     echo'
                                         <li style="margin-right: -10px;">
-                                            <a href="'._SERVER_.'Tienda/Login"><i class="fas fa-user u-s-m-l-9 u-c-brand mr-1"></i> INICIAR SESION</a>
+                                            <a href="'._SERVER_.'Admin/Login"><i class="fas fa-user u-s-m-l-9 u-c-brand mr-1"></i> INICIAR SESION</a>
                                         </li>
                                         <li>
-                                            <a href="'._SERVER_.'Tienda/Registrate">REGISTRATE</a>
+                                            <a href="'._SERVER_.'Admin/Registrate">REGISTRATE</a>
                                         </li>';
                                 }
                             ?>
@@ -102,7 +103,7 @@
                         <div class="col-lg-3 col-md-9 col-sm-6">
                             <div class="brand-logo text-lg-center">
                                 <a href="<?= _SERVER_?>">
-                                    <img src="<?= _SERVER_?>ecommerce/media/main-logo/logo.png" alt="Groover Brand Logo" class="app-brand-logo">
+                                    <img src="<?= _SERVER_?>styles/img/iconos_sistema/logo.png" alt="Groover Brand Logo" class="app-brand-logo">
                                 </a>
                             </div>
                         </div>

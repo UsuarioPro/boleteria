@@ -25,7 +25,7 @@
                 <!-- Mid-Footer /- -->
                 <!-- Bottom-Footer -->
                 <div class="bottom-footer-wrapper">
-                    <img src="<?= _SERVER_?>ecommerce/media/main-logo/logo.png" style="filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff);" alt="Groover Brand Logo" class="app-brand-logo pb-1">
+                    <img src="<?= _SERVER_?>styles/img/iconos_sistema/logo.png" style="filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff);" alt="Groover Brand Logo" class="app-brand-logo pb-1">
                     <p class="copyright-text text-white">Copyright &copy; 2025 <a href="https://fact-cloud.grupoaventuraada.net/" target="_blank" style="color:rgb(255, 130, 130)">Fact-Cloud</a> Todos los derechos reservados</p>
                 </div>
             </div>

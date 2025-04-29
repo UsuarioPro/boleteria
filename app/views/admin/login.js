@@ -52,7 +52,8 @@ function loginsistema(e)
             {
                 $("#titulo").html("Ingreso Exitoso");
                 $("#mensaje").html("Redireccionando...");
-                location.href =  urlweb + "Tienda/home";
+                // location.href =  urlweb + "Tienda/home";
+                location.href =  urlweb;
             }
             else if(data.rpta  == 1)
             {

@@ -4,18 +4,18 @@
         <div class="container">
             <div class="brand-slider-content-local owl-carousel" data-item="10">
                 <div class="brand-pic brand-sm">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/1.jpg" alt="Hoy" title="Eventos de Hoy"></a>
+                    <a href="#"><img src="<?= _SERVER_?>media/locales/1.jpg" alt="Hoy" title="Eventos de Hoy"></a>
                 </div>
                 <div class="brand-pic brand-sm">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/2.jpg" alt="Eventos de Fin de Semana" title="Eventos de Fin de Semana"></a>
+                    <a href="#"><img src="<?= _SERVER_?>media/locales/2.jpg" alt="Eventos de Fin de Semana" title="Eventos de Fin de Semana"></a>
                 </div>
                 <div class="brand-pic brand-sm">
-                    <a href="#"><img src="<?= _SERVER_?>ecommerce/media/brand-locales/3.jpg" alt="Populares" alt="Más Populares"></a>
+                    <a href="#"><img src="<?= _SERVER_?>media/locales/3.jpg" alt="Populares" alt="Más Populares"></a>
                 </div>
                 <?php
                     foreach($locales as $l)
                     {
-                        $ruta_img = _SERVER_ .'ecommerce/media/brand-locales/';
+                        $ruta_img = _SERVER_ .'media/locales/';
                         $imagen = empty($l->loc_imagen_logo)? $ruta_img.'default.jpg' : $ruta_img.$l->loc_imagen_logo;
                         echo '
                         <div class="brand-pic brand-sm">
@@ -33,13 +33,13 @@
             <?php
                 if(empty($banners))
                 {
-                    echo '<div class="bg-image"  style="background-image: url('._SERVER_.'ecommerce/media/main-slider/defaulf.jpg);"></div>';
+                    echo '<div class="bg-image"  style="background-image: url('._SERVER_.'media/banners/defaulf.jpg);"></div>';
                 }
                 else
                 {
                     foreach($banners as $b)
                     {
-                        $ruta_img = _SERVER_ .'ecommerce/media/main-slider/';
+                        $ruta_img = _SERVER_ .'media/banners/';
                         $imagen = empty($b->ban_nombre)? $ruta_img.'default.jpg' : $ruta_img.$b->ban_nombre;
                         echo '<div class="bg-image"  style="background-image: url('.$imagen.'"></div>';
                     }
@@ -55,7 +55,7 @@
                 <?php
                     foreach($artistas as $a)
                     {
-                        $ruta_img = _SERVER_ .'ecommerce/media/brand-logos/';
+                        $ruta_img = _SERVER_ .'media/artistas_logo/';
                         $imagen = empty($a->art_imagen_logo)? $ruta_img.'default.jpg' : $ruta_img.$a->art_imagen_logo;
                         echo '
                             <div class="brand-pic">
@@ -76,13 +76,13 @@
                     <?php 
                         if(empty($banner_top))
                         {
-                            echo '<img class="img-fluid" src="'._SERVER_.'ecommerce/media/banners/defaulf.jpg" alt="Sin Imagen">';
+                            echo '<img class="img-fluid" src="'._SERVER_.'media/banners/defaulf.jpg" alt="Sin Imagen">';
                         }
                         else
                         {
                             foreach($banner_top as $b)
                             {
-                                $ruta_img = _SERVER_ .'ecommerce/media/banners/';
+                                $ruta_img = _SERVER_ .'media/banners/';
                                 $imagen = empty($b->ban_nombre)? $ruta_img.'default.jpg' : $ruta_img.$b->ban_nombre;
                                 echo '<img class="img-fluid" src="'.$imagen.'" alt="'.$b->ban_nombre.'">';
                             }
@@ -154,20 +154,20 @@
     </div>
     <!-- Custom-Deal-Page -->
     <!-- Banner-Image & View-more -->
-    <div class="banner-image-view-more">
+    <div class="banner-image-view-more pb-4">
         <div class="container">
             <div class="image-banner">
                 <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
                     <?php 
                         if(empty($banner_bottom))
                         {
-                            echo '<img class="img-fluid" src="'._SERVER_.'ecommerce/media/banners/defaulf_2.png" alt="Sin Imagen">';
+                            echo '<img class="img-fluid" src="'._SERVER_.'media/banners/defaulf_2.png" alt="Sin Imagen">';
                         }
                         else
                         {
                             foreach($banner_bottom as $b)
                             {
-                                $ruta_img = _SERVER_ .'ecommerce/media/banners/';
+                                $ruta_img = _SERVER_ .'media/banners/';
                                 $imagen = empty($b->ban_nombre)? $ruta_img.'defaulf_2.png' : $ruta_img.$b->ban_nombre;
                                 echo '<img class="img-fluid" src="'.$imagen.'" alt="'.$b->ban_nombre.'">';
                             }
@@ -178,7 +178,7 @@
         </div>
     </div>
     <!-- Outer-Footer -->
-    <div class="outer-footer-wrapper u-s-p-y-20">
+    <div class="outer-footer-wrapper u-s-p-y-20" hidden>
         <h6>
             Para ofertas especiales y otra información sobre descuentos
         </h6>

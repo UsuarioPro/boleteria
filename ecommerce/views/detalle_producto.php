@@ -134,7 +134,7 @@
                                     <?php
                                         foreach($artistas_conciertos as $a)
                                         {
-                                            $ruta_img = _SERVER_ .'ecommerce/media/brand-logos/';
+                                            $ruta_img = _SERVER_ .'media/artistas_logo/';
                                             $imagen = empty($a->art_imagen_logo)? $ruta_img.'default.jpg' : $ruta_img.$a->art_imagen_logo;
                                             echo '
                                             <div class="product-item col-lg-4 col-md-6 col-sm-6">

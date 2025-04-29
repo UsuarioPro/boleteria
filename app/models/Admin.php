@@ -66,4 +66,37 @@ class Admin
         }
         return $result;
     }
+    public function registrarse($model)
+    {
+        $result = 2;
+        try 
+        {
+            if(empty($model->usu_id))
+            {//si no existe id es un dato nuevo
+                $sql = 'INSERT INTO usuario(rol_id, usu_login, usu_clave, usu_fecha_creacion, usu_correo, usu_estado) VALUES (?,?,?,?,?,1)';
+                $stm = $this->pdo->prepare($sql);
+                $stm->execute([
+                    $model->rol_id,
+                    $model->usu_nombre,
+                    $model->usu_contrasena,
+                    date('Y-m-d H:i:s'),
+                    $model->usu_correo
+                ]);
+            } 
+            $result = 1;
+        } 
+        catch (Exception $e)
+        {
+            if($e->getCode() == "23000")// Codigo 23000 Violación de la restricción de integridad: entrada duplicada
+            {
+                $result = 3;
+            }
+            else
+            {
+                $result = 2;
+                $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            }
+        }
+        return $result;
+    }
 }

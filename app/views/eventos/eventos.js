@@ -30,6 +30,7 @@ window.onload = function()
     obtener_artista();
     $('#btn_cancelar').click(cancelarform);
     $('#btn_agregar_pago').click(agregar_artista);
+    $('#btn_agregar_zona').click(agregar_zona);
 }
 // codigo que sirve para validar el fomulario 
 function validar_formulario()
@@ -149,10 +150,26 @@ function limpiar()
 {
     $('#con_id').val(null);
     $('#con_nombre').val(null); 
-    $('#cat_descripcion').val(null);
+    $('#con_subtitulo').val(null);
+    $('#loc_id').val(null).trigger('change');
+    $('#cat_id').val(null).trigger('change');
+    $('#con_descripcion').val(null);
+    $('#con_fecha').val(null);
+    $('#con_hora').val(null);
+    $('#select_artista').val(null).trigger('change');
+    $('#fecha_hora').val(null);
+    $('#nombre_zona').val(null);
+    $('#descripcion_zona').val(null);
+    $('#precio_zona').val(null);
+    $('#stock_zona').val(null);
     $('#temp_img1').val(null);
+    $('#temp_img2').val(null);
+    $('#tbl_artista tbody').html(null);
+    $('#tbl_zonas tbody').html(null);
+    contador = 1000;
     file_1.removeFiles({ revert: true });
-    document.getElementById('titulo').innerHTML='Registrar Categoria';
+    file_2.removeFiles({ revert: true });
+    document.getElementById('titulo').innerHTML='Registrar Concierto';
 }
 //funcion cancelar form
 function cancelarform()
@@ -323,6 +340,7 @@ function editar(con_id)
         $('#temp_img1').val(data['model'].con_imagen);
         $('#temp_img2').val(data['model'].con_portada);
         $('#tbl_artista tbody').html(data['html']);
+        $('#tbl_zonas tbody').html(data['html_zonas']);
         if(data['model'].con_imagen != "")
         {
             file_1.addFile(urlweb + "media/concierto_logo/"+data['model'].con_imagen+"?file"+new Date().getTime());
@@ -475,6 +493,10 @@ function agregar_artista()
                         <td><button type="button" class="btn btn-danger" onclick="eliminar_detalle(`+art_id+`)"><i class="fas fa-trash"></i> </button>  </td>
                     </tr>`;
                 $('#tbl_artista tbody').append(html);
+                setTimeout(() => {
+                    $('#fecha_hora').val(null);
+                    $('#select_artista').val(null).trigger('change');
+                }, 100);
             }
             else
             {
@@ -509,4 +531,84 @@ function validar_producto_repetido(art_id)
 function eliminar_detalle(art_id)
 {
     $("#fila_"+art_id).remove();
+}
+let contador = 1000;
+function agregar_zona()
+{
+    if($('#nombre_zona').val() != '')
+    {
+        if($('#descripcion_zona').val() != '')
+        {
+            if($('#precio_zona').val() != '')
+            {
+                if($('#stock_zona').val() != '')
+                {
+                    if(validar_zona_repetido($('#nombre_zona').val()) === false)
+                    {
+                        let html = `<tr class="filas_zona" id="fila_zona_`+contador+`">
+                                <td>`+$('#nombre_zona').val()+`</td>
+                                <td>`+$('#precio_zona').val()+`</td>
+                                <td>`+$('#stock_zona').val()+`</td>
+                                <td>`+$('#descripcion_zona').val()+`
+                                    <input type="hidden" name="zon_nombre[]" value="`+$('#nombre_zona').val()+`">
+                                    <input type="hidden" name="zon_precio[]" value="`+$('#precio_zona').val()+`">
+                                    <input type="hidden" name="zon_detalle[]" value="`+$('#descripcion_zona').val()+`">
+                                    <input type="hidden" name="zon_stock[]" value="`+$('#stock_zona').val()+`">
+                                </td>
+                                <td><button type="button" class="btn btn-danger" onclick="eliminar_detalle_zona(`+contador+`)"><i class="fas fa-trash"></i> </button>  </td>
+                            </tr>`;
+                        $('#tbl_zonas tbody').append(html);
+                        contador++;
+                        setTimeout(() => {
+                            $('#nombre_zona').val(null);
+                            $('#descripcion_zona').val(null);
+                            $('#precio_zona').val(null);
+                            $('#stock_zona').val(null);                        
+                        }, 100);
+                    }
+                    else
+                    {
+                        alerta_global('warning', 'El nombre de la zona ya se encuentra seleccionado');
+                    }
+                }    
+                else
+                {
+                    alerta_global('warning', 'Ingrese el stock de la zona');
+                }            
+            }      
+            else
+            {
+                alerta_global('warning', 'Ingrese un precio a la zonas');
+            }
+        }
+        else
+        {
+            alerta_global('warning', 'Ingrese una descripcion a la zona');
+        }
+    }
+    else
+    {
+        alerta_global('warning', 'Ingrese el nombre de la zona');
+    }
+}
+function validar_zona_repetido(zon_nombre)
+{
+    let valor= false;
+    let con = document.getElementsByName("zon_nombre[]");
+    for (var i = 0; i < con.length; i++)
+    {
+        var inpCon=con[i];
+        console.log(inpCon.value);
+        console.log(zon_nombre);
+        if(inpCon.value == zon_nombre)
+        {
+            valor = true;
+            return valor;
+        }
+    }
+    return valor;
+}
+function eliminar_detalle_zona(zon_id)
+{
+    $("#fila_zona_"+zon_id).remove();
 }

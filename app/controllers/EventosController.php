@@ -168,6 +168,12 @@ class EventosController
             $model->con_portada = $imagen5;
             $model->art_id = $_POST['art_id'];
             $model->art_fecha_hora = $_POST['art_fecha_hora'];
+
+            $model->zon_id = isset($_POST['zon_id'])? $_POST['zon_id'] : null;
+            $model->zon_nombre = $_POST['zon_nombre'];
+            $model->zon_precio = $_POST['zon_precio'];
+            $model->zon_detalle = $_POST['zon_detalle'];
+            $model->zon_stock = $_POST['zon_stock'];
             
             $result = $this->evento->guardar_editar($model);
             if($result == 1)
@@ -207,7 +213,9 @@ class EventosController
         $con_id = $_POST['con_id'];
         $model = $this->evento->obtener($con_id);
         $artistas = $this->evento->obtener_artistas_concierto($con_id);
+        $zonas = $this->evento->obtener_zonas_concierto($con_id);
         $html = '';
+        $html_zonas = '';
         foreach($artistas as $m)
         {
             $html .= '<tr class="filas" id="fila_'.$m->art_id.'">
@@ -221,7 +229,23 @@ class EventosController
                     <td><button type="button" class="btn btn-danger" onclick="eliminar_detalle('.$m->art_id.')"><i class="fas fa-trash"></i> </button>  </td>
                 </tr>';
         }
-        echo json_encode(array("model" => $model, "html" => $html));
+        foreach($zonas as $m)
+        {
+            $html_zonas .= '<tr class="filas_zona" id="fila_zona_'.$m->zon_id.'">
+                    <td>'.$m->zon_nombre.'</td>
+                    <td>'.$m->zon_precio.'</td>
+                    <td>'.$m->zon_stock.'</td>
+                    <td>'.$m->zon_detalle.'
+                        <input type="hidden" name="zon_id[]" value="'.$m->zon_id.'">
+                        <input type="hidden" name="zon_nombre[]" value="'.$m->zon_nombre.'">
+                        <input type="hidden" name="zon_precio[]" value="'.$m->zon_precio.'">
+                        <input type="hidden" name="zon_detalle[]" value="'.$m->zon_detalle.'">
+                        <input type="hidden" name="zon_stock[]" value="'.$m->zon_stock.'">
+                    </td>
+                    <td><button type="button" class="btn btn-danger" onclick="eliminar_detalle_zona('.$m->zon_id.')"><i class="fas fa-trash"></i> </button>  </td>
+                </tr>';
+        }
+        echo json_encode(array("model" => $model, "html" => $html, "html_zonas" => $html_zonas));
     }
     // //funcion para activar o desactivar
     public function activar_desactivar()

@@ -119,6 +119,21 @@ class Eventos
         }
         return $result;
     }
+    public function obtener_zonas_concierto($con_id)
+    {
+        $result = [];
+        try 
+        {
+            $stm = $this->pdo->prepare('select * from zona_concierto where con_id = ?');
+            $stm->execute([$con_id]);
+            $result = $stm->fetchAll();
+        } 
+        catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
     public function obtener_ultima_venta_id()//funcion para poner en estado ocupado la mesa
     {
         $result = 0;
@@ -166,6 +181,18 @@ class Eventos
                         $model->art_fecha_hora[$i],
                     ]);
                 }
+                for($j = 0; $j < count($model->zon_nombre); $j++)
+                {
+                    $sql_pago = 'INSERT INTO zona_concierto(con_id, zon_nombre, zon_precio, zon_detalle, zon_stock, zon_estado) VALUES (?,?,?,?,?,1)';
+                    $stm_pago = $this->pdo->prepare($sql_pago);
+                    $stm_pago->execute([
+                        $con->con_id,
+                        $model->zon_nombre[$i],
+                        $model->zon_precio[$i],
+                        $model->zon_detalle[$i],
+                        $model->zon_stock[$i],
+                    ]);
+                }
                 $result = 1;
             } 
             //si existe entonces el dato se actualiza
@@ -198,6 +225,21 @@ class Eventos
                         $model->art_fecha_hora[$i],
                     ]);
                 }
+                $stm_pro = $this->pdo->prepare('DELETE FROM zona_concierto WHERE con_id = ?');
+                $stm_pro->execute([$model->con_id]);    
+                for($j = 0; $j < count($model->zon_nombre); $j++)
+                {
+                    $sql_pago = 'INSERT INTO zona_concierto(con_id, zon_nombre, zon_precio, zon_detalle, zon_stock, zon_estado) VALUES (?,?,?,?,?,1)';
+                    $stm_pago = $this->pdo->prepare($sql_pago);
+                    $stm_pago->execute([
+                        $model->con_id,
+                        $model->zon_nombre[$j],
+                        $model->zon_precio[$j],
+                        $model->zon_detalle[$j],
+                        $model->zon_stock[$j],
+                    ]);
+                }
+
                 $result = 1;
             }
         } 

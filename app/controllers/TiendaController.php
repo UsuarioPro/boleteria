@@ -14,27 +14,16 @@ class TiendaController
     }
     public function home()
     {
-        if($_SESSION['rol_id'] == 1)
-        {
-            require_once _VIEW_PATH_ . 'header-admin.php';
-            require_once _VIEW_PATH_ . 'navbar-admin.php';
-            require_once _VIEW_PATH_ . 'admin/index.php';
-            require_once _VIEW_PATH_ . 'footer-admin.php';
+        $locales = $this->ecommerce->listar_locales();
+        $categorias = $this->ecommerce->listar_categoria();
+        $artistas = $this->ecommerce->listar_artistas();
+        $banner_top = $this->ecommerce->listar_banners(1);
+        $banners = $this->ecommerce->listar_banners(2);
+        $banner_bottom = $this->ecommerce->listar_banners(3);
     
-        }
-        else
-        {
-            $locales = $this->ecommerce->listar_locales();
-            $categorias = $this->ecommerce->listar_categoria();
-            $artistas = $this->ecommerce->listar_artistas();
-            $banner_top = $this->ecommerce->listar_banners(1);
-            $banners = $this->ecommerce->listar_banners(2);
-            $banner_bottom = $this->ecommerce->listar_banners(3);
-        
-            require _VIEW_PATH_ECOMMERCE_ .'header.php';
-            require _VIEW_PATH_ECOMMERCE_ .'home.php';
-            require _VIEW_PATH_ECOMMERCE_ .'footer.php';
-        }
+        require _VIEW_PATH_ECOMMERCE_ .'header.php';
+        require _VIEW_PATH_ECOMMERCE_ .'home.php';
+        require _VIEW_PATH_ECOMMERCE_ .'footer.php';
     }
     public function mis_boletos()
     {    
@@ -46,7 +35,6 @@ class TiendaController
         {
             $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
             $mis_boletos = $this->ecommerce->obtener_mis_boletos($id_valor);
-    
             require _VIEW_PATH_ECOMMERCE_ .'header.php';
             require _VIEW_PATH_ECOMMERCE_ .'mis_boletos.php';
             require _VIEW_PATH_ECOMMERCE_ .'footer.php';
@@ -86,19 +74,33 @@ class TiendaController
     }
     public function editar_perfil()
     {
-        $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
-        $editar_usuario = $this->ecommerce->obtener_datos_usuario($id_valor);
-        require _VIEW_PATH_ECOMMERCE_ .'header.php';
-        require _VIEW_PATH_ECOMMERCE_ .'editar_usuario.php';
-        require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        if(!isset($_SESSION['usu_id']))
+        {
+            require _VIEW_PATH_ECOMMERCE_ .'mensaje_iniciar_sesion.php';
+        }
+        else
+        {
+            $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
+            $editar_usuario = $this->ecommerce->obtener_datos_usuario($id_valor);
+            require _VIEW_PATH_ECOMMERCE_ .'header.php';
+            require _VIEW_PATH_ECOMMERCE_ .'editar_usuario.php';
+            require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        }
     }
     public function editar_pass()
     {
-        $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
-        $editar_usuario = $this->ecommerce->obtener_datos_usuario($id_valor);
-        require _VIEW_PATH_ECOMMERCE_ .'header.php';
-        require _VIEW_PATH_ECOMMERCE_ .'editar_pass.php';
-        require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        if(!isset($_SESSION['usu_id']))
+        {
+            require _VIEW_PATH_ECOMMERCE_ .'mensaje_iniciar_sesion.php';
+        }
+        else
+        {
+            $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
+            $editar_usuario = $this->ecommerce->obtener_datos_usuario($id_valor);
+            require _VIEW_PATH_ECOMMERCE_ .'header.php';
+            require _VIEW_PATH_ECOMMERCE_ .'editar_pass.php';
+            require _VIEW_PATH_ECOMMERCE_ .'footer.php';
+        }
     }
     public function proceder_pago()
     {
@@ -123,17 +125,16 @@ class TiendaController
             require _VIEW_PATH_ECOMMERCE_ .'carro_vacio.php';
         }
     }
-    public function login()
-    {
-        require _VIEW_PATH_ . 'admin/login.php';
-    }
-    public function registrate()
-    {
-        require _VIEW_PATH_ . 'admin/registrate.php';
-    }
     public function bienvenida()
     {
-        require _VIEW_PATH_ECOMMERCE_ .'bienvenida.php';
+        if(!isset($_SESSION['usu_id']))
+        {
+            require _VIEW_PATH_ECOMMERCE_ .'mensaje_iniciar_sesion.php';
+        }
+        else
+        {
+            require _VIEW_PATH_ECOMMERCE_ .'bienvenida.php';
+        }
     }
     public function conciertos()
     {
@@ -144,8 +145,8 @@ class TiendaController
             $concierto = $this->ecommerce->obtener_concierto($id_valor);
             $artistas_conciertos = $this->ecommerce->obtener_artistas_conciertos($id_valor);
             $zonas_precios = $this->ecommerce->zonas_precios($id_valor);
-            $img_portada = empty($concierto->con_portada)? _SERVER_.'ecommerce/media/conciertos-banners/default.png' : _SERVER_.'ecommerce/media/conciertos-banners/'.$concierto->con_portada;
-            $img_escenario = empty($concierto->con_portada)? _SERVER_.'ecommerce/media/escenarios/default.jpg' : _SERVER_.'ecommerce/media/escenarios/'.$concierto->loc_escenario_img;
+            $img_portada = empty($concierto->con_portada)? _SERVER_.'media/concierto_portada/default.png' : _SERVER_.'media/concierto_portada/'.$concierto->con_portada;
+            $img_escenario = empty($concierto->con_portada)? _SERVER_.'media/escenarios/default.jpg' : _SERVER_.'media/escenarios/'.$concierto->loc_escenario_img;
             // Arrays de días y meses
             $dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
             $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -265,7 +266,7 @@ class TiendaController
             $i=1;
             foreach ($model as $m)
             {
-                $ruta_img = _SERVER_ .'ecommerce/media/productos/';
+                $ruta_img = _SERVER_ .'media/concierto_logo/';
                 $imagen = empty($m->con_imagen)? $ruta_img.'defaulf.jpg' : $ruta_img.$m->con_imagen;
                 $eventos .='<div class="product-item col-lg-3 col-md-6 col-sm-6" onclick="mostrar_detalle_concierto('.$m->con_id.')">
                     <div class="item">
@@ -348,82 +349,7 @@ class TiendaController
                 </li>
             </ul>';
         }
-
         echo json_encode(array('eventos' => $eventos, 'paginacion' => $paginacion));
-    }
-    public function registrarse()
-    {
-        try
-        {
-            $model = new Ecommerce();
-            $model->rol_id = 2;
-            $model->usu_nombre = $_POST['logina'];
-            $model->usu_contrasena = password_hash($_POST['clavea'],PASSWORD_DEFAULT);
-            $model->usu_correo = $_POST['correo'];
-            $result = $this->ecommerce->registrarse($model);
-
-            $rpta = ($result == 1)? "ok" : $rpta = ($result == 3)? 'unico': "error";
-            $mensaje = ($result == 1)? "Registro Guardado Correctamente" : $mensaje = ($result == 3)? 'Este Nombre de Usuario o el Correo ya se encuentra registrado, intente con otro Nombre de Usuario' : "No se pudo guardar el registro, Intente contactar con el administrador del sistema";
-        }
-        catch (Throwable $e)
-        {
-            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
-            $rpta = 'error';
-            $mensaje = 'Hubo un error Critico, Intente contactar con el administrador del sistema';
-        }
-        echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
-    }
-    public function loguearse()
-    {
-        $usuario = isset($_POST['logina'])?$_POST['logina']: null;
-        $pass = isset($_POST['clavea'])?$_POST['clavea']: null;
-        if(!empty($usuario) && !empty($pass))
-        {
-            $model = $this->ecommerce->loguear($usuario);
-            if(isset($model->usu_id) && $model->usu_estado == 1)
-            {
-                if(password_verify($pass,$model->usu_clave))
-                {
-                    $_SESSION['usu_id'] = $model->usu_id; 
-                    $_SESSION['rol_id'] = $model->rol_id; 
-                    $_SESSION['tra_nombre'] = $model->tra_nombre; 
-                    $_SESSION['usu_login'] = $model->usu_login; 
-                    $_SESSION['usu_clave'] = $model->usu_clave; 
-                    $_SESSION['usu_imagen'] = $model->usu_imagen; 
-                    $_SESSION['usu_estado'] = $model->usu_estado; 
-                    $_SESSION['rol_nombre'] = $model->rol_nombre; 
-
-                    $this->ecommerce->ultimo_logueo($model->usu_id);
-                    // $this->bitacora->guardar('Inicio Sesion ' . $_SESSION['usu_login'],'Inicio Sesion');
-                    $rpta = 0;
-                    $mensaje = 'Ingreso Exitoso';
-                }
-                else
-                {
-                    $rpta = 1;
-                    $mensaje = 'Contraseña Incorrecta, por favor introduzca nuevamente su contraseña';    
-                    // $this->bitacora->guardar('Inicio de Sesión Fallido, error en Contraseña a Usuario: ' . $usuario,'Prohibido');
-                }
-                
-            }
-            else if(isset($model->usu_id) && $model->usu_estado == 0)
-            {
-                $rpta = 2;
-                $mensaje = 'Este Usuario se encuentra suspendido, Intente Contactar con el Administrador del Sistema';
-                // $this->bitacora->guardar('Inicio de Sesión Fallido Usuario Suspendido: ' . $usuario,'Prohibido');
-            }
-            else if(!isset($model->usu_id))
-            {
-                $rpta = 3;
-                $mensaje = 'Usuario y Contraseña Incorrectas, Estas credenciales no coinciden con nuestros registros.';    
-                // $this->bitacora->guardar('Inicio de Sesión Fallido Usuario y Contraseña Incorrectas: ','Prohibido');
-            }
-            echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
-        }
-        else 
-        {
-            $this->login();
-        }
     }
     //funcion para guardar y editar los datos
     public function editar_usuario()

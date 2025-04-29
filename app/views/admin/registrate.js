@@ -19,7 +19,7 @@ function registrar(e)
         var formdata = new FormData($("#formulario")[0]);
         $.ajax({
             type: "POST",
-            url: urlweb + "?c=Tienda&a=registrarse",
+            url: urlweb + "?c=Admin&a=registrarse",
             data: formdata,
             dataType: 'json',
             contentType : false,
@@ -39,7 +39,7 @@ function registrar(e)
                 alerta_global("success",data.mensaje + ', Iniciando Sesion...'); 
                 $.ajax({
                     type: "POST",
-                    url: urlweb + "?c=Tienda&a=loguearse",
+                    url: urlweb + "?c=Admin&a=loguearse",
                     data: {logina : $('#logina').val(), clavea : $('#clavea').val()},
                     dataType: 'json',
                 }).done(function(data)
@@ -53,13 +53,16 @@ function registrar(e)
                     }
                     else
                     {
-                        location.href =  urlweb + "Tienda/login";
+                        location.href =  urlweb + "Admin/login";
                     }
                 }).always(function()//cuando se completa 
                 {
                     $("#btn_login").prop("disabled",false);
                 }).fail(function(jqXHR, textStatus, errorThrown)
                 {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
                     alerta_global("error", mensaje_error_ajax);
                 });
             }
