@@ -189,6 +189,29 @@ class Ecommerce
         }
         return $result;
     }
+    public function obtener_boleto($bol_id)
+    {
+        $result = [];
+        try 
+        {
+            $stm = $this->pdo->prepare('SELECT b.bol_id, b.det_ven_id, b.codigo_unico, 
+            b.bol_cant_personas, b.estado, d.precio_unitario, 
+            d.zon_id, d.con_id, z.zon_nombre, z.zon_detalle, 
+            c.con_nombre, c.con_subtitulo,c.con_descripcion, 
+            c.con_fecha, c.con_hora FROM boleto AS b
+                INNER JOIN detalle_venta as d ON d.det_ven_id = b.det_ven_id
+                INNER JOIN venta as v ON d.ven_id = v.ven_id
+                INNER JOIN zona_concierto as z ON z.zon_id = d.zon_id
+                INNER JOIN concierto as c ON c.con_id = d.con_id WHERE b.bol_id = ?');
+            $stm->execute([$bol_id]);
+            $result = $stm->fetch();
+        } 
+        catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
     //funcion para listar los datos
     public function listar_locales()
     {

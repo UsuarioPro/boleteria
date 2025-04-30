@@ -12,7 +12,7 @@
         <input type="hidden" id="urlweb" name="urlweb" value="<?= _SERVER_?>">
         <div class="form-wrapper">
             <main class="form-side">
-                <a href="#" title="Logo">
+                <a href="<?= _SERVER_?>" title="Logo">
                     <img src="<?= _SERVER_?>styles/img/iconos_sistema/logo.png" alt="Laplace Logo" class="logo" style="height: 30px;" >
                 </a>
                 <form class="my-form" id="formulario" method="post">

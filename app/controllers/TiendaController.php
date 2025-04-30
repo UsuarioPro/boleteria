@@ -436,4 +436,24 @@ class TiendaController
         }
         echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
     }
+
+    public function generar_documento()
+    {
+        $data = $this->ecommerce->obtener_boleto($_POST['bol_id']);
+
+        $reponse = array();
+        $reponse["codigo"] = $data->codigo_unico;
+        $reponse["con_nombre"] = $data->con_nombre;
+        $reponse["zon_nombre"] = $data->zon_nombre;
+        $reponse["bol_cant_personas"] = $data->bol_cant_personas;
+        $reponse["con_fecha"] = $data->con_fecha;
+        $reponse["con_hora"] = $data->con_hora;
+        $datos_qr = json_encode($reponse);
+
+        include 'reportes/dompdf/generar_qr.php';
+        require 'reportes/dompdf/boleto_entrada.php';
+
+        $response =  array( 'rpta' => $rpta, 'mensaje' => $mensaje, 'name' => $nombre_pdf, 'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData));
+        echo json_encode($response);
+    }
 }

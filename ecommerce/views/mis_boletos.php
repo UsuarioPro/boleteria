@@ -44,7 +44,7 @@
                                         <td>'.$m->zon_nombre.' <br> <small>'.$m->zon_detalle.'</small> </td>
                                         <td>Valido para: '.$m->bol_cant_personas.' Persona(s)</td>
                                         <td>'.date("d/m/Y h:i:s A", strtotime($m->con_fecha .' '. $m->con_hora)).'</td>
-                                        <td> <button class="btn buttom-primary"><i class="fas fa-file-pdf"></i></button> </td>
+                                        <td><button class="btn buttom-primary" onclick="obtener_pdf_boleto('.$m->bol_id.')"><i class="fas fa-file-pdf"></i></button> </td>
                                     </tr>';
                                 }
                             ?>    

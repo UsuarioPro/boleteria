@@ -20,7 +20,7 @@
                 </div>
             </aside>
             <main class="form-side">
-                <a href="#" title="Logo">
+                <a href="<?= _SERVER_?>" title="Logo">
                     <img src="<?= _SERVER_?>styles/img/iconos_sistema/logo.png" alt="Laplace Logo" class="logo_right" style="height: 30px;" >
                 </a>
                 <form class="my-form" id="formulario" name="formulario" method="post">

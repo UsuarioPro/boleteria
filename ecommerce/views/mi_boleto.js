@@ -167,3 +167,39 @@ function calcular_total()
     $("#lbt_subtotal").html(total == 0? 'S/. 0.00' : 'S/.' + total.toFixed(2));
     $("#lbl_total").html(total == 0? 'S/. 0.00' : 'S/.' + total.toFixed(2));
 }
+function obtener_pdf_boleto(bol_id)
+{
+    $.ajax({
+        url : urlweb + '?c=Tienda&a=generar_documento',
+        type : 'POST',
+        data : {
+                "bol_id": bol_id, 
+            },
+        dataType: 'json',
+        beforeSend: function()
+        {
+            alerta_showLoading('Espere un momento', 'Generando documento...')
+        },
+    }).done(function(data)
+    {
+        if(data.rpta == true)
+        {
+            var $a = $("<a>");
+            $a.attr("href",data.file);
+            $("body").append($a);
+            $a.attr("download", data.name);
+            $a[0].click();
+            $a.remove();
+            alerta_global('success', data.mensaje)
+        }
+        else
+        {
+            alerta_global('error', data.mensaje)
+        }
+    }).always(function()
+    {
+    }).fail(function(jqXHR, textStatus, errorThrown)
+    {
+        alerta_global("error",mensaje_error_ajax);
+    });
+}
