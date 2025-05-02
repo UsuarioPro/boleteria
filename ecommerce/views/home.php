@@ -115,7 +115,7 @@
                     <div class="select-box-wrapper">
                         <label class="sr-only" for="sort-by">Sort By</label>
                         <select class="select-box" id="sort-by">
-                            <option selected="selected" value="" disabled>Seleccione una Categoria</option>
+                            <option selected="selected" value="" >Seleccione una Categoria</option>
                             <?php
                                 foreach($categorias as $c)
                                 {

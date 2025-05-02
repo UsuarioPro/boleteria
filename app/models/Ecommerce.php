@@ -279,9 +279,8 @@ class Ecommerce
         try 
         {
             $sLimit = "LIMIT $empieza_limite, $limite";
-            $filtro_ciu = (empty($ciudad))? '' : "AND l.loc_ciudad = $ciudad";
-            $filtro = "";
-            // $filtro = ($filtro== '')? '' : " AND p.pro_nombre LIKE '%$filtro%' OR p.pro_codigo LIKE '%$filtro%'";
+            $filtro = ($filtro== '')? '' : " AND c.cat_id = $filtro ";
+            $filtro_ciu = (empty($ciudad))? '' : " AND l.loc_ciudad = $ciudad";
             try 
             {
                 $sql = "SELECT c.con_id, c.loc_id, c.cat_id, c.con_nombre, c.con_descripcion , c.con_fecha, c.con_hora, c.con_estado, 
@@ -307,8 +306,7 @@ class Ecommerce
     }
     public function cantidad_conciertos_filtro($ciudad, $filtro)//es la misma consulta que seleccionar_producto_cuadricula en caso cambiar consulta cambiar en las dos funciones
     {
-        $filtro = '';
-        // $filtro = ($filtro== '')? '' : " AND p.pro_nombre LIKE '%$filtro%' OR p.pro_codigo LIKE '%$filtro%'";
+        $filtro = ($filtro== '')? '' : " AND c.cat_id = $filtro ";
         $filtro_ciu = (empty($ciudad))? '' : "AND l.loc_ciudad = $ciudad";
         try 
         {

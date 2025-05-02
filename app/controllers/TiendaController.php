@@ -210,23 +210,17 @@ class TiendaController
         $inicio = 0;
         $paginacion = '';
         $eventos = '';
-        // if(empty($cantidad_conciertos))
-        // {
-        //     echo'
-        //         <div id="producto_vacio" class="p-0 pt-2 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0 text-center div_producto_cuadricula_vacio">
-        //             <div class="form-group interno col-lg-12 col-sm-12 col-md-12 col-xs-12">
-        //                 <img style="border-radius: 0%; border:none" src="../styles/img/ups.png" width="55px" alt=""><br>
-        //                 <span class="text-bold">¡No se encontro ningun producto!</span>
-        //             </div>
-        //         </div>
-        //         <nav aria-label="Page navigation example" class="footer_filtro_producto_cuadricula">
-        //             <ul class="pagination justify-content-center m-0">
-        //                 <li class="page-item disabled"><a class="page-link rounded-0"  href="#">Anterior</a></li>
-        //                 <li class="page-item disabled"><a class="page-link rounded-0" href="#">Siguiente</a></li>
-        //             </ul>
-        //         </nav>';
-        // } 
-        // else
+        if(empty($cantidad_conciertos))
+        {
+            $eventos = '
+                <div id="producto_vacio" class="p-0 pt-2 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0 text-center div_producto_cuadricula_vacio">
+                    <div class="form-group interno col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                        <img style="border-radius: 0%; border:none" src="../styles/img/ups.png" width="55px" alt=""><br>
+                        <span class="text-bold">¡No se encontro ningun producto!</span>
+                    </div>
+                </div>';
+        } 
+        else
         {
             if($paginas == 1)
             {

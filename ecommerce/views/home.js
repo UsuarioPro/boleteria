@@ -3,6 +3,7 @@ window.onload = function()
 {
     llenar_card_cookies();
     mostrar_conciertos();
+    $('#sort-by').change(mostrar_conciertos);
     $('#show-records').change(mostrar_conciertos);
     $('#search-landscape').on('keypress', function(e) 
     {
@@ -18,7 +19,7 @@ function mostrar_conciertos()
         type : 'POST',
         dataType: 'json',
         url: urlweb + "?c=Tienda&a=mostrar_conciertos",
-        data: {limite : $('#show-records').val(), ciudad : '', filtro : '' },
+        data: {limite : $('#show-records').val(), ciudad : '', filtro : $('#sort-by').val() },
         beforeSend: function()
         {
             // alerta_showLoading("Espere un momento", "Desactivando...");
