@@ -38,9 +38,9 @@
                     <div class="text-center">
                         <h1 style="font-size: 120px; line-height: 100px;">Inicia sesión  <br> en tu cuenta</h1>
                         <h5>Accede a tu cuenta para ver tus boletos, <br> gestionar tus compras y disfrutar de todos los beneficios. <br>
-                        ¿Aún no tienes una cuenta? <a href="<?= _SERVER_ ?>Tienda/Registrate" class="text-primary" >¡Regístrate ahora</a> y no te pierdas ningún evento!</h5>
+                        ¿Aún no tienes una cuenta? <a href="<?= _SERVER_ ?>Admin/Registrate" class="text-primary" >¡Regístrate ahora</a> y no te pierdas ningún evento!</h5>
                         <div class="redirect-link-wrapper u-s-p-t-25">
-                            <a class="redirect-link" href="<?= _SERVER_ ?>Tienda/Login">
+                            <a class="redirect-link" href="<?= _SERVER_ ?>Admin/Login">
                                 <span>Ir a Iniciar Sesion</span>
                             </a>
                             <a class="redirect-link ml-4" href="<?= _SERVER_ ?>">
