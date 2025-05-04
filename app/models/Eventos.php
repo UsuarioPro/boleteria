@@ -187,10 +187,10 @@ class Eventos
                     $stm_pago = $this->pdo->prepare($sql_pago);
                     $stm_pago->execute([
                         $con->con_id,
-                        $model->zon_nombre[$i],
-                        $model->zon_precio[$i],
-                        $model->zon_detalle[$i],
-                        $model->zon_stock[$i],
+                        $model->zon_nombre[$j],
+                        $model->zon_precio[$j],
+                        $model->zon_detalle[$j],
+                        $model->zon_stock[$j],
                     ]);
                 }
                 $result = 1;
@@ -239,7 +239,6 @@ class Eventos
                         $model->zon_stock[$j],
                     ]);
                 }
-
                 $result = 1;
             }
         } 

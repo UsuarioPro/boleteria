@@ -367,56 +367,63 @@ function guardar_editar(e)
     {
         if($('#tbl_artista tbody tr').length != '0')
         {
-            var isNuevo = "Se procedera a guardar una nueva categoria"
-            var mensaje_sec = "Guardando..."
-            if($('#con_id').val() != "") { isNuevo = "Se procedera a editar la categoria"; mensaje_sec = "Editando..."  }
-            mensaje_confirmacion.fire(
-                { 
-                    icon : 'info',
-                    title: 'Necesitamos de tu Confirmación',
-                    html: `<span>`+isNuevo+`</span> <br>
-                        <div class="mt-2">
-                            <span class="text-success text-bold">¿Esta usted de Acuerdo?</span>
-                        </div>
-                        `,
-                    width : '400px',
-                }).then((result) =>
-                {
-                    if (result.value == true)
+            if($('#tbl_zonas tbody tr').length != '0')
+            {
+                var isNuevo = "Se procedera a guardar una nueva categoria"
+                var mensaje_sec = "Guardando..."
+                if($('#con_id').val() != "") { isNuevo = "Se procedera a editar la categoria"; mensaje_sec = "Editando..."  }
+                mensaje_confirmacion.fire(
+                    { 
+                        icon : 'info',
+                        title: 'Necesitamos de tu Confirmación',
+                        html: `<span>`+isNuevo+`</span> <br>
+                            <div class="mt-2">
+                                <span class="text-success text-bold">¿Esta usted de Acuerdo?</span>
+                            </div>
+                            `,
+                        width : '400px',
+                    }).then((result) =>
                     {
-                        var formdata = new FormData($("#formulario")[0]);
-                        $.ajax({
-                            url : urlweb + "?c=Eventos&a=guardar_editar",
-                            type : "POST",
-                            dataType: 'json',
-                            data : formdata,
-                            contentType : false,
-                            processData : false,
-                            beforeSend: function()
-                            {
-                                alerta_showLoading("Espere un segundo...", mensaje_sec);
-                            },    
-                        }).done(function(data, textStatus, jqXHR)
+                        if (result.value == true)
                         {
-                            if(data.rpta == "error"){alerta_global("error", data.mensaje);}
-                            else 
-                            { 
-                                alerta_global("success",data.mensaje); 
-                                tabla.ajax.reload(); 
-                                $('#myModal').modal('hide'); 
-                                cancelarform(); 
-                            }
-                        }).fail(function(jqXHR, textStatus, errorThrown)
+                            var formdata = new FormData($("#formulario")[0]);
+                            $.ajax({
+                                url : urlweb + "?c=Eventos&a=guardar_editar",
+                                type : "POST",
+                                dataType: 'json',
+                                data : formdata,
+                                contentType : false,
+                                processData : false,
+                                beforeSend: function()
+                                {
+                                    alerta_showLoading("Espere un segundo...", mensaje_sec);
+                                },    
+                            }).done(function(data, textStatus, jqXHR)
+                            {
+                                if(data.rpta == "error"){alerta_global("error", data.mensaje);}
+                                else 
+                                { 
+                                    alerta_global("success",data.mensaje); 
+                                    tabla.ajax.reload(); 
+                                    $('#myModal').modal('hide'); 
+                                    cancelarform(); 
+                                }
+                            }).fail(function(jqXHR, textStatus, errorThrown)
+                            {
+                                Swal.close();
+                                alerta_global("error", "Hubo un error al contactarse con el servidor, compruebe nuevamente");
+                            });
+                        }
+                        else
                         {
                             Swal.close();
-                            alerta_global("error", "Hubo un error al contactarse con el servidor, compruebe nuevamente");
-                        });
-                    }
-                    else
-                    {
-                        Swal.close();
-                    }
-                })
+                        }
+                    })
+            }
+            else
+            {
+                alerta_global('warning', 'Es necesario tener al menos una zona con precios')
+            }    
         }
         else
         {

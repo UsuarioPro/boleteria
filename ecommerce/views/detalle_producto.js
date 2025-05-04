@@ -36,7 +36,7 @@ window.onload = function()
   $('.btn_carro').click(function () 
   {
     let cantidad = $('#cantidad'+$(this).attr('data_indice')).val();
-    let img_logo = ($(this).attr('data_imagen') == '')? urlweb + 'ecommerce/media/conciertos-logo/default.jpg' : urlweb + 'ecommerce/media/conciertos-logo/'+$(this).attr('data_imagen');
+    let img_logo = ($(this).attr('data_imagen') == '')? urlweb + 'media/concierto_logo/default.jpg' : urlweb + 'media/concierto_logo/'+$(this).attr('data_imagen');
 
     let data = { con_id: $(this).attr('data_con_id'), zon_id: $(this).attr('data_id'), nombre: $(this).attr('data_nombre'), precio: $(this).attr('data_precio'),
       detalle: $(this).attr('data_detalle'), stock: $(this).attr('data_stock'), concierto_nombre: $(this).attr('data_concierto_nombre'), imagen: $(this).attr('data_imagen'),
