@@ -17,9 +17,10 @@ class Eventos
         try 
         {
             $stm = $this->pdo->prepare('SELECT c.con_id, c.loc_id, c.cat_id, c.con_nombre, c.con_subtitulo, c.con_imagen, c.con_portada, c.con_descripcion, c.con_fecha, c.con_hora, c.con_estado,
-            l.loc_nombre, l.loc_direccion, l.loc_ciudad, ca.cat_nombre FROM concierto as c
+            l.loc_nombre, l.loc_direccion, l.loc_ciudad, ca.cat_nombre, cl.cli_id, cl.cli_nombre FROM concierto as c
             INNER JOIN local as l ON l.loc_id = c.loc_id
-            INNER JOIN categoria as ca ON ca.cat_id = c.cat_id');
+            INNER JOIN categoria as ca ON ca.cat_id = c.cat_id
+            INNER JOIN cliente as cl ON cl.cli_id = c.cli_id');
             $stm->execute();
             $result = $stm->fetchAll();
         } 
@@ -34,6 +35,20 @@ class Eventos
         try 
         {
             $stm = $this->pdo->prepare('SELECT * FROM local as l WHERE l.loc_estado = 1 ');
+            $stm->execute();
+            $result = $stm->fetchAll();
+        } 
+        catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
+    public function obtener_clientes()
+    {
+        try 
+        {
+            $stm = $this->pdo->prepare('SELECT * FROM cliente as c WHERE c.cli_estado = 1 ');
             $stm->execute();
             $result = $stm->fetchAll();
         } 
@@ -156,12 +171,13 @@ class Eventos
         {
             if(empty($model->con_id))
             {//si no existe id es un dato nuevo
-                $sql = "INSERT INTO concierto(loc_id, cat_id, con_nombre, con_subtitulo, con_imagen, con_portada, con_descripcion, con_fecha, con_hora, con_estado) 
-                    VALUES (?,?,?,?,?,?,?,?,?,0)";
+                $sql = "INSERT INTO concierto(loc_id, cat_id, cli_id, con_nombre, con_subtitulo, con_imagen, con_portada, con_descripcion, con_fecha, con_hora, con_estado) 
+                    VALUES (?,?,?,?,?,?,?,?,?,?,0)";
                 $stm = $this->pdo->prepare($sql);
                 $stm->execute([
                     $model->loc_id,
                     $model->cat_id,
+                    $model->cli_id,
                     $model->con_nombre,
                     $model->con_subtitulo,
                     $model->con_imagen,
@@ -198,12 +214,13 @@ class Eventos
             //si existe entonces el dato se actualiza
             else 
             {
-                $sql = "UPDATE concierto SET loc_id= ?, cat_id = ?, con_nombre = ?, con_subtitulo = ?, con_imagen = ?, con_portada = ?, con_descripcion = ?, 
+                $sql = "UPDATE concierto SET loc_id= ?, cat_id = ?, cli_id, con_nombre = ?, con_subtitulo = ?, con_imagen = ?, con_portada = ?, con_descripcion = ?, 
                     con_fecha = ?, con_hora = ? where con_id = ? LIMIT 1";
                 $stm = $this->pdo->prepare($sql);
                 $stm->execute([
                     $model->loc_id,
                     $model->cat_id,
+                    $model->cli_id,
                     $model->con_nombre,
                     $model->con_subtitulo,
                     $model->con_imagen,

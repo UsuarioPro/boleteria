@@ -56,18 +56,19 @@ class EventosController
 
             $data[]=array(
                 "0"=>$i,
-                "1"=>$m->con_nombre.'<br><small>'.$m->con_subtitulo.'</small>' ,
-                "2"=>'<span style="white-space: normal; word-wrap: break-word; text-align : justify !important;">'.$m->con_descripcion.'</span>',
-                "3"=>date("d/m/Y h:i:s A", strtotime($m->con_fecha.' '.$m->con_hora)),
-                "4"=>$m->loc_nombre.'<br><small>DIRECCION: '.$m->loc_direccion.' - CIUDAD: '.$m->loc_ciudad.'</small>' ,
-                "5"=>$m->cat_nombre,
-                "6"=>$templade,
-                "7"=>($m->con_imagen)?"<div class='text-center'><img data-fancybox='gallery".$m->con_id."' src='"._SERVER_."media/concierto_logo/".$m->con_imagen."' height='50px' width='60px'></div>":
+                "1"=>$m->cli_nombre,
+                "2"=>$m->con_nombre.'<br><small>'.$m->con_subtitulo.'</small>' ,
+                "3"=>'<span style="white-space: normal; word-wrap: break-word; text-align : justify !important;">'.$m->con_descripcion.'</span>',
+                "4"=>date("d/m/Y h:i:s A", strtotime($m->con_fecha.' '.$m->con_hora)),
+                "5"=>$m->loc_nombre.'<br><small>DIRECCION: '.$m->loc_direccion.' - CIUDAD: '.$m->loc_ciudad.'</small>' ,
+                "6"=>$m->cat_nombre,
+                "7"=>$templade,
+                "8"=>($m->con_imagen)?"<div class='text-center'><img data-fancybox='gallery".$m->con_id."' src='"._SERVER_."media/concierto_logo/".$m->con_imagen."' height='50px' width='60px'></div>":
                 "<div class='text-center'><img src='"._SERVER_."styles/img/imagen-no-disponible.jpg' height='50px' width='60px'></div>",
-                "8"=>($m->con_portada)?"<div class='text-center'><img data-fancybox='gallery".$m->con_id."' class='portada' src='"._SERVER_."media/concierto_portada/".$m->con_portada."' height='50px' width='60px'></div>":
+                "9"=>($m->con_portada)?"<div class='text-center'><img data-fancybox='gallery".$m->con_id."' class='portada' src='"._SERVER_."media/concierto_portada/".$m->con_portada."' height='50px' width='60px'></div>":
                 "<div class='text-center'><img src='"._SERVER_."styles/img/imagen-no-disponible.jpg' height='50px' width='60px'></div>",
-                "9"=>($m->con_estado)?'<span class="badge bg-gradient-success"> YA REALIZADO</span>':'<span class="badge bg-gradient-danger">EN VENTA</span>',
-                "10"=> 
+                "10"=>($m->con_estado)?'<span class="badge bg-gradient-success"> YA REALIZADO</span>':'<span class="badge bg-gradient-danger">EN VENTA</span>',
+                "11"=> 
                     $this->isDefaulf = ($m->con_estado == 0)?'<button data-tippy-content="<small>Editar Eventos</small>" class="tooltip_tippy btn btn-warning btn-circle btn-sm btn-flat" onclick="editar('.$m->con_id.')"><i class="fas fa-edit"></i></button></a>'.
                     ' <button data-tippy-content="<small>Desactivar Eventos</small>"  class="tooltip_tippy btn btn-danger btn-circle btn-sm btn-flat" onclick="desactivar('."1".','.$m->con_id.')"><i class="fas fa-toggle-on"></i></button>'.
                     ' <button hidden data-tippy-content="<small>Eliminar Eventos</small>"  class="tooltip_tippy btn btn-danger btn-circle btn-sm btn-flat" onclick="eliminar('.$m->con_id.')"><i class="fas fa-trash"></i></button>':
@@ -89,6 +90,15 @@ class EventosController
         foreach ($model as $m)
         {
             echo '<option value="'.$m->loc_id.'">'.$m->loc_nombre.'</option>';
+        }
+    }
+    public function obtener_clientes()
+    {
+        $model = $this->evento->obtener_clientes();
+        echo '<option value="" disabled selected>Seleccione una opcion</option>';
+        foreach ($model as $m)
+        {
+            echo '<option value="'.$m->cli_id.'">'.$m->cli_nombre.'</option>';
         }
     }
     public function obtener_categorias()
@@ -157,6 +167,7 @@ class EventosController
 
             $model = new Eventos();
             $model->con_id = $_POST['con_id']; 
+            $model->cli_id = $_POST['cli_id']; 
             $model->loc_id = $_POST['loc_id'];
             $model->cat_id  = $_POST['cat_id'];
             $model->con_nombre = $_POST['con_nombre'];

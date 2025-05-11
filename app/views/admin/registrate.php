@@ -1,3 +1,19 @@
+<style>
+    .select-box {
+    background-color: #f1f2f3;
+    border: 1px solid #DFE3E6;
+    color: #333333;
+    font: 13px "Open Sans", sans-serif;
+    height: 45px;
+    padding: 6px 28px 6px 12px;
+    text-align: left;
+    transition: all .3s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.5rem;
+    }
+</style>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -38,6 +54,14 @@
                     <div class="text-field">
                         <label for="email">Correo</label>
                         <input type="email" id="correo" name="correo" placeholder="Ingrese el Usuario Correo" autocomplete="off">
+                    </div>
+                    <div class="text-field">
+                        <label for="rol_id">Tipo de Acceso</label>
+                        <select type="text" id="rol_id" name="rol_id" class="select-box" placeholder="Seleccione el Tipo de Acceso" required="">
+                            <option value="" disabled="" selected="">Seleccione el Tipo de Acceso</option>
+                            <option value="2">CLIENTE</option>
+                            <option value="4">MODO ORGANIZADOR</option>
+                        </select>
                     </div>
                     <div class="text-field">
                         <label for="password">Contraseña</label>

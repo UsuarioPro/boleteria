@@ -30,6 +30,7 @@
                                 <thead>
                                 <tr>
                                     <th class="all" title="Numero de Fila">#</th>
+                                    <th class="all" title="Numero de Fila">Organizador</th>
                                     <th class="all" title="Nombre de la Categoria">Evento</th>
                                     <th class="all" title="">Descripcion Evento</th>
                                     <th class="all" title="Descripcion de la Categoria">Fecha y Hora</th>
@@ -57,6 +58,10 @@
                                     <form id="formulario" name="formulario" method="POST" accept-charset="utf-8">
                                         <div class="modal-body pb-0 mb-0">
                                             <div class="row">
+                                                <div class="form-group col-sm-12">
+                                                    <label>Organizador</label><label class="text-red">(*)</label>
+                                                    <select name="cli_id" id="cli_id" class="form-control rounded-0 select2"></select>
+                                                </div>
                                                 <div class="form-group col-sm-6">
                                                     <label>Nombre Concierto</label><label class="text-red">(*)</label>
                                                     <input type="hidden" name="con_id" id="con_id">

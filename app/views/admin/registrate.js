@@ -49,7 +49,14 @@ function registrar(e)
                     $("#mensaje").html("Redireccionando...");
                     if(data.rpta  == 0)
                     {
-                        location.href =  urlweb + "Tienda/bienvenida";
+                        if(data.rol_id == 2)
+                        {
+                            location.href =  urlweb + "Tienda/bienvenida";                            
+                        }
+                        else if(data.rol_id == 1)
+                        {
+                            location.href =  urlweb;                            
+                        }
                     }
                     else
                     {
@@ -60,9 +67,6 @@ function registrar(e)
                     $("#btn_login").prop("disabled",false);
                 }).fail(function(jqXHR, textStatus, errorThrown)
                 {
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
                     alerta_global("error", mensaje_error_ajax);
                 });
             }

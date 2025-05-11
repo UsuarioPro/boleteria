@@ -22,7 +22,7 @@ class AdminController
     //funcion que muestra la vista para el admin general al inicar app web
     public function dashboard() 
     {
-        if($_SESSION['rol_id'] == 1)
+        if($_SESSION['rol_id'] == 1 || $_SESSION['rol_id'] == 4)
         {
             $opc_modulo = $this->navbar->obtener_opcion_modulo($_GET['c']);
             $modulo = $opc_modulo->mod_nombre;
@@ -127,7 +127,7 @@ class AdminController
         try
         {
             $model = new Admin();
-            $model->rol_id = 2;
+            $model->rol_id = $_POST['rol_id'];
             $model->usu_nombre = $_POST['logina'];
             $model->usu_contrasena = password_hash($_POST['clavea'],PASSWORD_DEFAULT);
             $model->usu_correo = $_POST['correo'];
@@ -142,6 +142,6 @@ class AdminController
             $rpta = 'error';
             $mensaje = 'Hubo un error Critico, Intente contactar con el administrador del sistema';
         }
-        echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
+        echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje, 'rol_id' => $model->rol_id));
     }
 }

@@ -28,6 +28,7 @@ window.onload = function()
     obtener_locales();
     obtener_categoria();
     obtener_artista();
+    obtener_clientes();
     $('#btn_cancelar').click(cancelarform);
     $('#btn_agregar_pago').click(agregar_artista);
     $('#btn_agregar_zona').click(agregar_zona);
@@ -96,6 +97,26 @@ function obtener_locales()
     }).done(function(data, textStatus, jqXHR)
     {
         $('#loc_id').html(data);
+    }).always(function()//cuando se completa 
+    {
+        // $('#overlay_general').hide();
+    }).fail(function(jqXHR, textStatus, errorThrown)
+    {
+        alerta_global("error",mensaje_error_ajax);
+    });
+}
+function obtener_clientes() 
+{
+    $.ajax({
+        url: urlweb + '?c=Eventos&a=obtener_clientes',
+        type: 'POST',
+        beforeSend: function()
+        {
+            // $('#overlay_general').show();
+        },
+    }).done(function(data, textStatus, jqXHR)
+    {
+        $('#cli_id').html(data);
     }).always(function()//cuando se completa 
     {
         // $('#overlay_general').hide();
@@ -332,6 +353,7 @@ function editar(con_id)
         $('#con_id').val(data['model'].con_id);
         $('#loc_id').val(data['model'].loc_id).trigger('change');
         $('#cat_id').val(data['model'].cat_id).trigger('change');
+        $('#cli_id').val(data['model'].cli_id).trigger('change');
         $('#con_nombre').val(data['model'].con_nombre);
         $('#con_subtitulo').val(data['model'].con_subtitulo);
         $('#con_descripcion').val(data['model'].con_descripcion);
