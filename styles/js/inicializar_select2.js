@@ -3,14 +3,14 @@
 // $('.select3').select2({theme: "bootstrap4", placeholder: 'Seleccione una opcion', width: '100%'});
 // $('.selectGroup').select2({theme: "bootstrap4", placeholder: 'Seleccione una opcion', allowClear: true, width: '70%'});
 
-// $('.select2-sm').select2({placeholder: 'Seleccione una opcion', allowClear: true, width: '100%'});
+$('.select2-sm').select2({placeholder: 'Seleccione una opcion', allowClear: true, width: '100%'});
 // $('.select2-sm_clear').select2({ placeholder: 'Seleccione una opcion', allowClear: false, width: '100%'});
 // //Aplicando la validacion del select cada vez que cambie
 // $('.select2, .select2-sm, .select2Html, .selectGroup, .select3, .select2-sm_clear').on('change', function() {$(this).trigger('blur');});
-// $('.select2, .select2-sm, .select2Html, .selectGroup, .select3, .select2-sm_clear').on('select2:open', function()
-// {
-//     setTimeout(() => { document.querySelector('.select2-dropdown.select2-dropdown--below .select2-search__field').focus(); },10);
-// });
+$('.select2, .select2-sm, .select2Html, .selectGroup, .select3, .select2-sm_clear').on('select2:open', function()
+{
+    setTimeout(() => { document.querySelector('.select2-dropdown.select2-dropdown--below .select2-search__field').focus(); },10);
+});
 // $('.selectMultiple').select2({theme: "bootstrap4", placeholder: 'Seleccione una opcion', allowClear: true, width: '100%'});
 // function initializeSelect2HTML(selector, ajaxUrl, condicion, tema) 
 // {

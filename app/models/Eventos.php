@@ -56,7 +56,7 @@ class Eventos
             l.loc_nombre, l.loc_direccion, l.loc_ciudad, ca.cat_nombre, cl.cli_id, cl.cli_nombre FROM concierto as c
             INNER JOIN local as l ON l.loc_id = c.loc_id
             INNER JOIN categoria as ca ON ca.cat_id = c.cat_id
-            INNER JOIN cliente as cl ON cl.cli_id = c.cli_id where cl.cli_id = ? and c.con_estado = 0 order by c.con_fecha ASC');
+            INNER JOIN cliente as cl ON cl.cli_id = c.cli_id where cl.cli_id = ? order by c.con_fecha ASC');
             $stm->execute([$cli_id]);
             $result = $stm->fetchAll();
         } 

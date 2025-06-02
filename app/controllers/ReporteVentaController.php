@@ -44,24 +44,29 @@ class ReporteVentaController
         echo '<option value="" disabled selected>Seleccione una opcion</option>';
         foreach ($model as $m)
         {
-            echo '<option value="'.$m->usu_id.'">'.$m->usu_nombre_completo.'</option>';
+            echo '<option value="'.$m->cli_id.'">'.$m->cli_nombre.'</option>';
         }
     }
     public function reporte_general()
     {
-        $tabla= 'venta as v INNER JOIN usuario as u ON u.usu_id = v.usu_id';
+        $tabla= ' venta as v INNER JOIN cliente as c ON c.cli_id = v.cli_id INNER JOIN tipo_identificacion_documento AS ti on ti.tip_ide_id = c.tip_ide_id
+        INNER JOIN detalle_venta as d ON d.ven_id = v.ven_id
+        INNER JOIN concierto as co ON co.con_id = d.con_id 
+        ';
 
         $columnas = array(
             0 => 'v.ven_id', 
-            1 => 'v.usu_id', 
+            1 => 'v.cli_id', 
             2 => 'v.tipo_pago', 
             3 => 'v.ven_fecha', 
             4 => 'v.ven_total', 
             5 => 'v.ven_estado',
-            6 => 'u.usu_nombre_completo',
-            7 => 'u.usu_numero_doc',
-            8 => 'u.usu_tipo_doc', 
-            28 => 'date_format(v.ven_fecha, "%d/%m/%Y %h:%i %p")',//creo esta columna para que el buscador del datatable pueda buscar en este formato la fecha 
+            6 => 'c.cli_nombre',
+            7 => 'c.cli_num_doc',
+            8 => "date_format(v.ven_fecha, '%d/%m/%Y %h:%i %p')",//creo esta columna para que el buscador del datatable pueda buscar en este formato la fecha 
+            9 => 'ti.tip_ide_abrev', 
+            10 => 'd.con_id', 
+            11 => 'co.cli_id', 
         );   
 
         $filtro = "";
@@ -73,17 +78,22 @@ class ReporteVentaController
         if(!empty($_GET['filtro_cliente']) && $_GET['filtro_cliente'] != 'null')
         {
             if ( $filtro != "" ) { $filtro .= " AND "; }
-            $filtro .=  "v.usu_id IN (".$_GET['filtro_cliente'].") ";
+            $filtro .=  "v.cli_id IN (".$_GET['filtro_cliente'].") ";
+        }
+        if(!empty($_GET['filtro_organizador']) && $_GET['filtro_organizador'] != 'null')
+        {
+            if ( $filtro != "" ) { $filtro .= " AND "; }
+            $filtro .=  "co.cli_id = ".$_GET['filtro_organizador']." ";
         }
 
-        $model = $this->serverside->listado_serverside($tabla, 'v.ven_id', $columnas, $filtro, null);
+        $model = $this->serverside->listado_serverside($tabla, 'v.ven_id', $columnas, $filtro, 'v.ven_id');
         $data = array();
         $i= ($_GET['iDisplayStart'] + 1);
         foreach ($model['result'] as $m)
         {
             $data[]=array(
                 "0"=> $i,
-                "1"=>'<span>'.$m->usu_nombre_completo.'<br><small>'.$m->usu_tipo_doc.' : '.$m->usu_numero_doc.'</small></span>',
+                "1"=>'<span>'.$m->cli_nombre.'<br><small>'.$m->tip_ide_abrev.' : '.$m->cli_num_doc.'</small></span>',
                 "2"=>$m->tipo_pago,
                 "3"=>date("d/m/Y h:i A", strtotime($m->ven_fecha)),
                 "4"=>$m->ven_total,
@@ -123,9 +133,13 @@ class ReporteVentaController
         {
             if ( $filtro != "" ) { $filtro .= " AND "; }
             $suc_id =  $_POST['filtro_cliente'];
-            $filtro .=  "v.usu_id IN (".$_GET['filtro_cliente'].") ";
+            $filtro .=  "v.cli_id IN (".$_GET['filtro_cliente'].") ";
         }
-        
+        if(!empty($_POST['filtro_organizador']) && $_POST['filtro_organizador'] != 'null')
+        {
+            if ( $filtro != "" ) { $filtro .= " AND "; }
+            $filtro .=  "co.cli_id IN (".$_GET['filtro_organizador'].") ";
+        }
         $registros = $this->reporte->reporte_venta($filtro);
         require 'reportes/dompdf/reporte_ventas.php';
 

@@ -9,6 +9,7 @@ window.onload = function()
     }).done(function(data)
     {
         $('#filtro_cliente').html(data);
+        $('#filtro_organizador').html(data);
     }).always(function()
     {
     }).fail(function(jqXHR, textStatus, errorThrown)
@@ -88,6 +89,13 @@ window.onload = function()
         exportar_reporte($(this).attr('value'))
     });
     $('#btn_limpiar').click(limpiar_filtros);
+    setTimeout(() => {
+        if($('#rol_id').val() != 1)
+        {
+            $('#filtro_organizador').val($('#cli_id').val()).trigger('change');
+            $('#filtro_organizador').attr('readonly', true);
+        }        
+    }, 100);
 }
 function seleccionar_filtro_tipo_tiempo(valor)
 {
@@ -216,6 +224,7 @@ function listar_datatable()
                 { "name": "filtro_fecha_inicio", "value": ""+rango_fecha_inicio+"" }, 
                 { "name": "filtro_fecha_fin", "value": ""+rango_fecha_fin+"" }, 
                 { "name": "filtro_cliente", "value": ""+ $('#filtro_cliente').val() +"" }, 
+                { "name": "filtro_organizador", "value": ""+ $('#filtro_organizador').val() +"" }, 
             ); 
         },
         "columnDefs":[

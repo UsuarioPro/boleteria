@@ -116,6 +116,7 @@ class TiendaController
             {
                 $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
                 $usuario = $this->ecommerce->obtener_datos_usuario($id_valor);
+                $tipos_documento = $this->ecommerce->tipos_documento();
                 require _VIEW_PATH_ECOMMERCE_ .'header.php';
                 require _VIEW_PATH_ECOMMERCE_ .'proceso_compra.php';
                 require _VIEW_PATH_ECOMMERCE_ .'footer.php';

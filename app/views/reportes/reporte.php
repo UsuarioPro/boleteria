@@ -28,16 +28,22 @@
     <section class="content">
         <div class="container">
             <input type="hidden" id="filtro_tiempo" name="filtro_tiempo">
+            <input type="hidden" id="cli_id" name="cli_id" value="<?= $_SESSION['cli_id'] ?>">
             <div class="row">
+                <input type="hidden" value="<?= $_SESSION['rol_id'] ?>" id="rol_id" name="rol_id">
                 <div class="col-md-12" id="div_filtros">
                     <form id="filtros_section" name="filtros_section" method="POST" accept-charset="utf-8" class="p-0">
                         <div class="row mb-0" id="filtros_section">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-2">
-                                <label for="suc_id" class="d-none d-xl-none d-lg-none d-md-none d-inline-block">Seleccione Cliente</label>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2" id="div_filtro_organizador">
+                                <label class="">Seleccione Organizador</label>
+                                <select id="filtro_organizador" name="filtro_organizador" class="form-control select2-sm" data-placeholder="Seleccione un Organizador"></select>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+                                <label class="">Seleccione Cliente</label>
                                 <select id="filtro_cliente" name="filtro_cliente" class="form-control select2-sm" data-placeholder="Seleccione un Cliente"></select>
                             </div>
-                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 p-0">
-                                <div class="col-xl-10 col-lg-10 col-md-11 col-sm-12 mb-2 float-right">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                                <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mb-2 float-right">
                                     <label for="" class="d-none d-xl-none d-lg-none d-md-none d-inline-block">Seleccione un Periodo</label>
                                     <div class="input-group rounded-0" id="div_filtro_fecha">
                                         <input type="text" id="filtro_fecha" name="filtro_fecha" value="" readonly style="background-color: white;" placeholder="Seleccione una fecha..." class="form-control form-control-sm rounded-0 btn btn-flat btn-sm btn-outline-primary">

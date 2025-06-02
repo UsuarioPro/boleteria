@@ -61,7 +61,7 @@
                             {
                                 echo'<tr>
                                     <td class="numeral">'.$cont.'</td>
-                                    <td class="_150"><span>'.$m->usu_nombre_completo.'<br><small>'.$m->usu_tipo_doc.' : '.$m->usu_numero_doc.'</small></span></td>
+                                    <td class="_150"><span>'.$m->cli_nombre.'<br><small>'.$m->tip_ide_abrev.' : '.$m->cli_num_doc.'</small></span></td>
                                     <td class="totales">'.$m->tipo_pago.'</td>
                                     <td class="totales">'.date("d/m/Y h:i A", strtotime($m->ven_fecha)).'</td>
                                     <td class="totales">'.$m->ven_total.'</td>';

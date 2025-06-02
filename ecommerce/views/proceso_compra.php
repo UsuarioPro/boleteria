@@ -31,7 +31,7 @@
                                     <label for="first-name">Nombre Completo
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="nombre" name="nombre" class="text-field" placeholder="Ingrese el Nombre" value="<?= $usuario->usu_nombre_completo?>">
+                                    <input type="text" id="nombre" name="nombre" class="text-field" placeholder="Ingrese el Nombre" value="<?= $usuario->cli_nombre?>">
                                 </div>
                                 <div class="group-inline u-s-m-b-10">
                                     <label for="tra_tipo_doc">Tipo de Documento
@@ -39,31 +39,34 @@
                                     </label>
                                     <input type="hidden" id="usu_id" name="usu_id" value="<?= $usuario->usu_id ?>">
                                     <input type="hidden" id="total" name="total">
-                                    <input type="hidden" id="value_select" value="<?= $usuario->usu_tipo_doc ?>">
+                                    <input type="hidden" id="value_select" value="<?= $usuario->tip_ide_id ?>">
                                     <select type="text" id="tra_tipo_doc" name="tra_tipo_doc" class="text-field" placeholder="Tipo de Documento">
                                         <option value="" disabled selected>Seleccione el Tipo de Documento</option>
-                                        <option value="DNI">DNI</option>
-                                        <option value="CARNET">CARNET DE EXTRANGERIA</option>
-                                        <option value="OTROS">OTROS DOCUMENTOS</option>
+                                        <?php 
+                                        foreach($tipos_documento as $m)
+                                        {
+                                            echo '<option value="'.$m->tip_ide_id.'">'.$m->tip_ide_abrev.'</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="group-inline u-s-m-b-10">
                                     <label for="first-name">Numero de Documento
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="num_documento" name="num_documento" class="text-field" value="<?= $usuario->usu_numero_doc?>" placeholder="Ingrese el Numero de documento">
+                                    <input type="text" id="num_documento" name="num_documento" class="text-field" value="<?= $usuario->cli_num_doc ?>" placeholder="Ingrese el Numero de documento">
                                 </div>
                                 <div class="group-inline u-s-m-b-10">
                                     <label for="first-name">Correo
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="correo" name="correo" class="text-field" value="<?= $usuario->usu_correo?>">
+                                    <input type="text" id="correo" name="correo" class="text-field" value="<?= $usuario->cli_correo?>">
                                 </div>
                                 <div class="group-inline u-s-m-b-10">
                                     <label for="first-name">Telefono
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="telefono" name="telefono" value="<?= $usuario->usu_telefono?>" class="text-field">
+                                    <input type="text" id="telefono" name="telefono" value="<?= $usuario->cli_telefono?>" class="text-field">
                                 </div> 
                             </div>
                             <!-- Billing-&-Shipping-Details /- -->
