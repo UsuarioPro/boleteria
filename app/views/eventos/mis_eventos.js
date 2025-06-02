@@ -1,5 +1,6 @@
 window.onload = function()
 {
+    $('#div_organizador').hide();
     tema = (detectCookie('dark_mode') == true)? 'dark-mode' : '';
     $('body').attr('class','hold-transition sidebar-mini sidebar-collapse layout-fixed layout-footer-fixed text-sm pace-primary ' + tema);//esconder navbar
 
@@ -88,7 +89,7 @@ function validar_formulario()
 function obtener_locales() 
 {
     $.ajax({
-        url: urlweb + '?c=Eventos&a=obtener_locales',
+        url: urlweb + '?c=MisEventos&a=obtener_locales',
         type: 'POST',
         beforeSend: function()
         {
@@ -108,7 +109,7 @@ function obtener_locales()
 function obtener_clientes() 
 {
     $.ajax({
-        url: urlweb + '?c=Eventos&a=obtener_clientes',
+        url: urlweb + '?c=MisEventos&a=obtener_clientes',
         type: 'POST',
         beforeSend: function()
         {
@@ -117,6 +118,9 @@ function obtener_clientes()
     }).done(function(data, textStatus, jqXHR)
     {
         $('#cli_id').html(data);
+        setTimeout(() => {
+            $('#cli_id').val($('#cli_defaulf').val()).trigger('change');
+        }, 100);
     }).always(function()//cuando se completa 
     {
         // $('#overlay_general').hide();
@@ -128,7 +132,7 @@ function obtener_clientes()
 function obtener_categoria()
 {
     $.ajax({
-        url: urlweb + '?c=Eventos&a=obtener_categorias',
+        url: urlweb + '?c=MisEventos&a=obtener_categorias',
         type: 'POST',
         beforeSend: function()
         {
@@ -148,7 +152,7 @@ function obtener_categoria()
 function obtener_artista()
 {
     $.ajax({
-        url: urlweb + '?c=Eventos&a=obtener_artistas',
+        url: urlweb + '?c=MisEventos&a=obtener_artistas',
         type: 'POST',
         beforeSend: function()
         {
@@ -214,11 +218,11 @@ function listar_datatable()
         "fixedColumns": 
         {
             left: 1,
-            right: 1
+            right: 2
         },
         "ajax":
         {
-            url: urlweb + '?c=Eventos&a=listar', 
+            url: urlweb + '?c=MisEventos&a=listar_por_cliente', 
             dataType : "json",
             error: function(e)
             {
@@ -235,7 +239,7 @@ function listar_datatable()
         },
         "bDestroy": true,
         "iDisplayLength": 25,//Paginación
-        "order": [[3, "desc"]],//Ordenar (columna,orden)
+        "order": [[0, "DESC"]],//Ordenar (columna,orden)
     }).DataTable();
     tabla.on('draw', function (settings, data) 
     {
@@ -249,7 +253,7 @@ function desactivar(con_estado, con_id)
         { 
             icon : 'info',
             title: 'Necesitamos de tu Confirmación',
-            html: `<span>Se procedera a marcar el evento como ya realizado</span> <br>
+            html: `<span>Se desactivara la categoria</span> <br>
                 <div class="mt-2">
                     <span class="text-success text-bold">¿Esta usted de Acuerdo?</span>
                 </div>
@@ -260,52 +264,7 @@ function desactivar(con_estado, con_id)
             if (result.value == true)
             {
                 $.ajax({
-                    url : urlweb + '?c=Eventos&a=activar_desactivar',
-                    type : 'POST',
-                    data : {con_id : con_id, con_estado : con_estado},
-                    dataType: 'json',
-                    beforeSend: function()
-                    {
-                        alerta_showLoading("Espere un segundo...", "Desactivando...");
-                    },
-                    }).done(function(data) 
-                    {  
-                        if(data.rpta == 'error')
-                        {
-                            alerta_global("error",data.mensaje);
-                        }
-                        else
-                        {
-                            alerta_global("success",data.mensaje);
-                        }
-                        tabla.ajax.reload();
-                    }).always(function() 
-                    {
-                    }).fail(function(jqXHR, textStatus, errorThrown)
-                    {
-                        alerta_global("error",mensaje_error_ajax);
-                    });
-            }
-        })
-}
-function rechazar(con_estado, con_id)
-{
-    mensaje_confirmacion.fire(
-        { 
-            icon : 'info',
-            title: 'Necesitamos de tu Confirmación',
-            html: `<span>Se procedera a rechazar el evento que propuso el organizador</span> <br>
-                <div class="mt-2">
-                    <span class="text-success text-bold">¿Esta usted de Acuerdo?</span>
-                </div>
-                `,
-            width : '400px',
-        }).then((result) =>
-        {
-            if (result.value == true)
-            {
-                $.ajax({
-                    url : urlweb + '?c=Eventos&a=activar_desactivar',
+                    url : urlweb + '?c=MisEventos&a=activar_desactivar',
                     type : 'POST',
                     data : {con_id : con_id, con_estado : con_estado},
                     dataType: 'json',
@@ -340,7 +299,7 @@ function activar(con_estado, con_id)
         { 
             icon : 'info',
             title: 'Necesitamos de tu Confirmación',
-            html: `<span>Se procedera a marcar el evento como vigente</span> <br>
+            html: `<span>Se desactivara la categoria</span> <br>
                 <div class="mt-2">
                     <span class="text-success text-bold">¿Esta usted de Acuerdo?</span>
                 </div>
@@ -351,7 +310,7 @@ function activar(con_estado, con_id)
             if (result.value == true)
             {
                 $.ajax({
-                    url : urlweb + '?c=Eventos&a=activar_desactivar',
+                    url : urlweb + '?c=MisEventos&a=activar_desactivar',
                     type : 'POST',
                     data : {con_id : con_id, con_estado : con_estado},
                     dataType: 'json',
@@ -384,7 +343,7 @@ function activar(con_estado, con_id)
 function editar(con_id) 
 {
     $.ajax({
-        url: urlweb + '?c=Eventos&a=obtener',
+        url: urlweb + '?c=MisEventos&a=obtener',
         type: 'POST',
         dataType: 'json',
         data:{con_id: con_id},
@@ -455,7 +414,7 @@ function guardar_editar(e)
                         {
                             var formdata = new FormData($("#formulario")[0]);
                             $.ajax({
-                                url : urlweb + "?c=Eventos&a=guardar_editar",
+                                url : urlweb + "?c=MisEventos&a=guardar_editar",
                                 type : "POST",
                                 dataType: 'json',
                                 data : formdata,
@@ -504,10 +463,9 @@ function eliminar(con_id)
         {
             icon : 'info',
             title: 'Necesitamos de tu Confirmación',
-            html: `<span>Se eliminará la categoria</span> <br>
+            html: `<span>Se eliminará el Evento</span> <br>
                 <div class="mt-2">
                     <small class="text-danger text-bold">Recuerde que esta opcion es Irreversible. <br>
-                        Solo se podra eliminar la categoria si no se tiene registrado productos con esta.</small> <br>
                     <span class="text-success text-bold">¿Esta usted de Acuerdo?</span>
                 </div>
                 `,
@@ -517,13 +475,13 @@ function eliminar(con_id)
             if (result.value == true)
             {
                 $.ajax({
-                    url : urlweb + '?c=Eventos&a=eliminar',
+                    url : urlweb + '?c=MisEventos&a=eliminar',
                     type : 'POST',
                     data : {con_id : con_id},
                     dataType: 'json',
                     beforeSend: function()
                     {
-                        alerta_showLoading("Espere un segundo...", "Eliminando Categoria...");
+                        alerta_showLoading("Espere un segundo...", "Eliminando Evento...");
                     },
                     }).done(function(data)
                     {

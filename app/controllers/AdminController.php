@@ -66,6 +66,7 @@ class AdminController
                 {
                     $_SESSION['usu_id'] = $model->usu_id; 
                     $_SESSION['rol_id'] = $model->rol_id; 
+                    $_SESSION['cli_id'] = $model->cli_id; 
                     $_SESSION['tra_nombre'] = $model->tra_nombre; 
                     $_SESSION['usu_login'] = $model->usu_login; 
                     $_SESSION['usu_clave'] = $model->usu_clave; 

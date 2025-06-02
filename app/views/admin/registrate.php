@@ -65,15 +65,15 @@
                     </div>
                     <div class="text-field">
                         <label for="password">Contraseña</label>
-                        <input type="password" minlength="6" maxlength="12" id="clavea" name="clavea" placeholder="Contraseña">
+                        <input type="password" minlength="4" maxlength="12" id="clavea" name="clavea" placeholder="Contraseña">
                     </div>
                     <div class="text-field">
                         <label for="password">Verificar Contraseña</label>
-                        <input type="password" minlength="6"  maxlength="12" id="pass_verificar" name="pass_verificar" placeholder="Contraseña">
+                        <input type="password" minlength="4"  maxlength="12" id="pass_verificar" name="pass_verificar" placeholder="Contraseña">
                     </div>
 
                     <button class="my-form__button" type="submit" id="btn_login" style="margin-top: 0px;">
-                        Iniciar Sesion
+                        Registrarse
                     </button>
                     <div class="my-form__actions" style="margin-top: -8px;">
                         <p style="font-size: 12px;">Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web, gestionar el acceso a tu cuenta y otros propósitos descritos en nuestra <a href="#" class="woocommerce-privacy-policy-link" target="_blank">política de privacidad</a>.</p>

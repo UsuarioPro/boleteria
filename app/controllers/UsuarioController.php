@@ -47,7 +47,7 @@ class UsuarioController
         {
             $data[]=array(
                 "0"=>$i,
-                "1"=>'<span>'.$m->usu_nombre_completo.'</span> <br> <small>DNI: '.$m->usu_numero_doc.'</small> ',
+                "1"=>'<span>'.$m->cli_nombre.'</span> <br> <small>'.$m->tip_ide_abrev.': '.$m->cli_num_doc.'</small> ',
                 "2"=>$m->rol_nombre,
                 "3"=>$m->usu_login,
                 "4"=>($m->usu_imagen)?"<div class='text-center'><img data-fancybox='gallery' src='"._SERVER_."media/usuarios/".$m->usu_imagen."' height='50px' width='60px'></div>":
@@ -204,17 +204,11 @@ class UsuarioController
             $imagen4 = $this->name_imagen($_FILES['usu_imagen']['tmp_name'], $_FILES['usu_imagen']['name'], $_POST['temp_img1'], $carpeta);
 
             $model = new Usuario();
-            $model->usu_id = $_POST['usu_id'];
+            $model->usu_id = isset($_POST['usu_id'])? $_POST['usu_id'] : null;
             $model->tra_id = isset($_POST['tra_id'])? $_POST['tra_id'] : null;
             $model->rol_id = $_POST['usu_rol_id'];
+            $model->cli_id = $_POST['cli_id'];
             $model->usu_nombre = $_POST['usu_nombre'];
-            $model->usu_tipo_doc = $_POST['tra_tipo_doc'];
-            $model->usu_num_doc = $_POST['tra_num_doc'];
-            $model->usu_nombre_completo = $_POST['tra_nombre_completo'];
-            $model->usu_direccion = $_POST['tra_direccion'];
-            $model->usu_correo = $_POST['tra_correo'];
-            $model->usu_telefono = $_POST['tra_telefono'];    
-            $model->usu_token = $_POST['usu_token'];    
             $model->usu_contrasena = password_hash($_POST['usu_contrasena'],PASSWORD_DEFAULT);
             $model->usu_imagen = $imagen4;
             $result = $this->usuario->guardar_editar($model);
@@ -263,6 +257,15 @@ class UsuarioController
             {
                 echo '<option value='.$reg->rol_id.'>'.$reg->rol_nombre.'</option>';
             }
+        }
+    }
+    public function obtener_clientes()
+    {
+        $model = $this->usuario->obtener_clientes();
+        echo '<option value="" disabled selected>Seleccione una opcion</option>';
+        foreach ($model as $m)
+        {
+            echo '<option value="'.$m->cli_id.'">'.$m->cli_nombre.'</option>';
         }
     }    
 }

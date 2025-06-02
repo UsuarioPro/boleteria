@@ -31,43 +31,47 @@
                                     <span class="astk">*</span>
                                 </label>
                                 <input type="hidden" id="usu_id" name="usu_id" value="<?= $editar_usuario->usu_id ?>">
-                                <input type="hidden" id="value_select" value="<?= $editar_usuario->usu_tipo_doc ?>">
+                                <input type="hidden" id="cli_id" name="cli_id" value="<?= $editar_usuario->cli_id ?>">
+                                <input type="hidden" id="value_select" value="<?= $editar_usuario->tip_ide_id ?>">
                                 <select type="text" id="tra_tipo_doc" name="tra_tipo_doc" class="text-field" placeholder="Tipo de Documento" required>
                                     <option value="" disabled selected>Seleccione el Tipo de Documento</option>
-                                    <option value="DNI">DNI</option>
-                                    <option value="CARNET">CARNET DE EXTRANGERIA</option>
-                                    <option value="OTROS">OTROS DOCUMENTOS</option>
+                                    <?php 
+                                        foreach($tipos_documento as $m)
+                                        {
+                                            echo '<option value="'.$m->tip_ide_id.'">'.$m->tip_ide_abrev.'</option>';
+                                        }
+                                    ?>
                                 </select>
                             </div>
                             <div class="u-s-m-b-10">
                                 <label for="tra_num_doc">Numero de Documento
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="tra_num_doc" name="tra_num_doc" class="text-field" placeholder="Ingrese el Numero de Documento" value="<?= $editar_usuario->usu_numero_doc ?>" required>
+                                <input type="text" id="tra_num_doc" name="tra_num_doc" class="text-field" placeholder="Ingrese el Numero de Documento" value="<?= $editar_usuario->cli_num_doc ?>" required>
                             </div>
                             <div class="u-s-m-b-10">
                                 <label for="tra_nombre_completo">Nombre Completo
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="tra_nombre_completo" name="tra_nombre_completo" class="text-field" placeholder="Ingrese el Nombre Completo" value="<?= $editar_usuario->usu_nombre_completo ?>" required>
+                                <input type="text" id="tra_nombre_completo" name="tra_nombre_completo" class="text-field" placeholder="Ingrese el Nombre Completo" value="<?= $editar_usuario->cli_nombre ?>" required>
                             </div>
                             <div class="u-s-m-b-10">
                                 <label for="tra_direccion">Direccion
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="tra_direccion" name="tra_direccion" class="text-field" placeholder="Ingrese la Direccion" value="<?= $editar_usuario->usu_direccion ?>" required>
+                                <input type="text" id="tra_direccion" name="tra_direccion" class="text-field" placeholder="Ingrese la Direccion" value="<?= $editar_usuario->cli_direccion ?>" required>
                             </div>
                             <div class="u-s-m-b-10">
                                 <label for="tra_correo">Correo
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="email" id="tra_correo" name="tra_correo" class="text-field" placeholder="Ingrese el Correo Electronico" value="<?= $editar_usuario->usu_correo ?>" required>
+                                <input type="email" id="tra_correo" name="tra_correo" class="text-field" placeholder="Ingrese el Correo Electronico" value="<?= $editar_usuario->cli_correo ?>" required>
                             </div>
                             <div class="u-s-m-b-10">
                                 <label for="tra_telefono">Telefono
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="tra_telefono" name="tra_telefono" class="text-field" placeholder="Ingrese el numero de Telefono o Celular" value="<?= $editar_usuario->usu_telefono ?>" required>
+                                <input type="text" id="tra_telefono" name="tra_telefono" class="text-field" placeholder="Ingrese el numero de Telefono o Celular" value="<?= $editar_usuario->cli_telefono ?>" required>
                             </div>
                             <div class="u-s-m-b-10">
                                 <label for="usu_nombre">Nombre de Usuario

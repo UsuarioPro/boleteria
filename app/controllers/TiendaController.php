@@ -82,6 +82,7 @@ class TiendaController
         {
             $id_valor = $_GET['v'] ?? ''; // Ej: productos, login, pedidos
             $editar_usuario = $this->ecommerce->obtener_datos_usuario($id_valor);
+            $tipos_documento = $this->ecommerce->tipos_documento();
             require _VIEW_PATH_ECOMMERCE_ .'header.php';
             require _VIEW_PATH_ECOMMERCE_ .'editar_usuario.php';
             require _VIEW_PATH_ECOMMERCE_ .'footer.php';
@@ -215,7 +216,7 @@ class TiendaController
             $eventos = '
                 <div id="producto_vacio" class="p-0 pt-2 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0 text-center div_producto_cuadricula_vacio">
                     <div class="form-group interno col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                        <img style="border-radius: 0%; border:none" src="../styles/img/ups.png" width="55px" alt=""><br>
+                        <img style="border-radius: 0%; border:none" src="'._SERVER_.'/styles/img/ups.png" width="55px" alt=""><br>
                         <span class="text-bold">¡No se encontro ningun producto!</span>
                     </div>
                 </div>';
@@ -265,8 +266,8 @@ class TiendaController
                 $eventos .='<div class="product-item col-lg-3 col-md-6 col-sm-6" onclick="mostrar_detalle_concierto('.$m->con_id.')">
                     <div class="item">
                         <div class="image-container">
-                            <a class="item-img-wrapper-link" href="#">
-                                <img class="img-fluid" src="'.$imagen.'" alt="Product">
+                            <a class="item-img-wrapper-link " href="#">
+                                <img class="img-ajustada" src="'.$imagen.'" alt="Product">
                             </a>
                         </div>
                         <div class="item-content" style="cursor: pointer;">
@@ -352,6 +353,7 @@ class TiendaController
         {
             $model = new Ecommerce();
             $model->usu_id = $_POST['usu_id'];
+            $model->cli_id = $_POST['cli_id'];
             $model->usu_nombre = $_POST['usu_nombre'];
             $model->usu_tipo_doc = $_POST['tra_tipo_doc'];
             $model->usu_num_doc = $_POST['tra_num_doc'];

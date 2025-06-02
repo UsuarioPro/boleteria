@@ -81,3 +81,20 @@
     color: red;
     font-size: 12px;
 }
+.image-container
+{
+    height: 220px;
+    background-color: red;
+}
+.image-container .item-img-wrapper-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.img-ajustada 
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}

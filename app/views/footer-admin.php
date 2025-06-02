@@ -24,6 +24,8 @@
     <script> $.widget.bridge('uibutton', $.ui.button) </script>
     <!-- Bootstrap 4 -->
     <script src="<?= _SERVER_?>styles/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- moment -->
+    <script src="<?= _SERVER_?>styles/plugins/moment/moment.min.js"></script>
     <!-- DataTables  & Plugins -->
     <script src="<?= _SERVER_?>styles/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="<?= _SERVER_?>styles/plugins/datatables/table_style/js/dataTables.bootstrap4.min.js"></script>
@@ -40,8 +42,9 @@
     <script src="<?= _SERVER_?>styles/plugins/datatables/responsive-2.4.1/js/responsive.bootstrap5.min.js"></script>
     <script src="<?= _SERVER_?>styles/plugins/datatables/fixedColumns-4.2.2/js/dataTables.fixedColumns.min.js"></script>
     <script src="<?= _SERVER_?>styles/plugins/datatables/fixedColumns-4.2.2/js/fixedColumns.bootstrap5.min.js"></script>
+    <script src="<?= _SERVER_?>styles/plugins/datatables/datetime-moment/datetime-moment.js"></script>
+
     <!-- daterangepicker -->
-    <script src="<?= _SERVER_?>styles/plugins/moment/moment.min.js"></script>
     <script src="<?= _SERVER_?>styles/plugins/moment/locale/es.js"></script>
     <script src="<?= _SERVER_?>styles/plugins/daterangepicker/daterangepicker.js"></script>
     <!-- datetimepicker -->

@@ -5,6 +5,9 @@ let tamano_datatable_ssm = 'calc(100vh - 348px)';
 let tamano_datatable_reporte = 'calc(100vh - 337px)';
 let tamano_datatable_reporte_sm = 'calc(100vh - 296px)';
 
+// Carga el formato de fecha que usas
+$.fn.dataTable.moment('DD/MM/YYYY hh:mm:ss A');
+
 $('#overlay_general').hide();
 $(".content-wrapper").click(function()
 {

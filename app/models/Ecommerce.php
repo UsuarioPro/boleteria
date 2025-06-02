@@ -11,12 +11,27 @@ class Ecommerce
         $this->pdo = Database::getConnection();//llamamos la conexion al iniciar la clase
         $this->log = new Log();
     }
+    public function tipos_documento()
+    {
+        $result = [];
+        try 
+        {
+            $stm = $this->pdo->prepare('SELECT * FROM tipo_identificacion_documento');
+            $stm->execute();
+            $result = $stm->fetchAll();
+        } 
+        catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
     public function obtener_datos_usuario($usu_id)
     {
         $result = [];
         try 
         {
-            $stm = $this->pdo->prepare('SELECT * FROM usuario WHERE usu_id = ? LIMIT 1');
+            $stm = $this->pdo->prepare('SELECT * FROM usuario as u INNER JOIN cliente as c ON c.cli_id = u.cli_id WHERE u.usu_id = ? LIMIT 1');
             $stm->execute([$usu_id]);
             $result = $stm->fetch();
         } 
@@ -31,19 +46,24 @@ class Ecommerce
         $result = 2;
         try 
         {            
-            $sql = "UPDATE usuario SET usu_login= ?, usu_nombre_completo = ?, usu_tipo_doc= ?, usu_numero_doc = ?, 
-            usu_direccion = ?, usu_telefono = ?, usu_correo = ? WHERE usu_id = ?";
+            $sql = 'UPDATE usuario SET usu_login= ? WHERE usu_id = ?';
             $stm = $this->pdo->prepare($sql);
             $stm->execute([
                 $model->usu_nombre,
-                $model->usu_nombre_completo, 
-                $model->usu_tipo_doc, 
-                $model->usu_num_doc, 
-                $model->usu_direccion, 
-                $model->usu_telefono, 
-                $model->usu_correo,
                 $model->usu_id,
             ]);
+            $sql = " update cliente set cli_nombre = ?, tip_ide_id = ?, cli_num_doc = ?, 
+                cli_direccion = ?, cli_telefono = ?, cli_correo = ? where cli_id = ?";
+                $stm = $this->pdo->prepare($sql);
+                $stm->execute([
+                    $model->usu_nombre_completo,
+                    $model->usu_tipo_doc,
+                    $model->usu_num_doc,
+                    $model->usu_direccion,
+                    $model->usu_telefono,
+                    $model->usu_correo,
+                    $model->cli_id
+                ]);
             $result = 1;
         } 
         catch (Exception $e)
@@ -287,7 +307,7 @@ class Ecommerce
                 ca.cat_nombre, l.loc_nombre, l.loc_direccion, l.loc_ciudad, c.con_imagen
                 FROM concierto as c
                 INNER JOIN local as l ON l.loc_id = c.loc_id
-                INNER JOIN categoria as ca ON ca.cat_id = c.cat_id  WHERE c.con_estado = 0 $filtro_ciu $filtro ORDER BY con_fecha, con_hora ASC $sLimit";
+                INNER JOIN categoria as ca ON ca.cat_id = c.cat_id  WHERE c.con_estado = 1 $filtro_ciu $filtro ORDER BY con_fecha, con_hora ASC $sLimit";
                 $stm = $this->pdo->prepare($sql);
                 $stm->execute();
                 $result = $stm->fetchAll();
@@ -314,7 +334,7 @@ class Ecommerce
                 ca.cat_nombre, l.loc_nombre, l.loc_direccion, l.loc_ciudad
                 FROM concierto as c
                 INNER JOIN local as l ON l.loc_id = c.loc_id
-                INNER JOIN categoria as ca ON ca.cat_id = c.cat_id WHERE c.con_estado = 0 $filtro_ciu $filtro ORDER BY con_fecha, con_hora ASC";
+                INNER JOIN categoria as ca ON ca.cat_id = c.cat_id WHERE c.con_estado = 1 $filtro_ciu $filtro ORDER BY con_fecha, con_hora ASC";
 
             $stm = $this->pdo->prepare($sql);
             $stm->execute();

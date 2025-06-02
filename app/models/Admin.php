@@ -17,9 +17,10 @@ class Admin
         $result = new Admin;
         try 
         {
-            $sql = 'SELECT u.usu_id, u.rol_id, u.usu_login, u.usu_clave, u.usu_imagen, u.usu_estado, u.usu_nombre_completo,
-            r.rol_nombre FROM usuario as u INNER JOIN rol as r ON r.rol_id = u.rol_id WHERE u.usu_login = ?';
-
+            $sql = 'SELECT u.usu_id, u.rol_id, u.usu_login, u.usu_clave, u.usu_imagen, u.usu_estado,
+                r.rol_nombre, c.cli_id, c.cli_nombre FROM usuario as u 
+                INNER JOIN rol as r ON r.rol_id = u.rol_id
+                INNER JOIN cliente as c ON c.cli_id = u.cli_id WHERE u.usu_login = ?';
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$usuario]);
             $fecht = $stm->fetch();
@@ -27,7 +28,8 @@ class Admin
             {
                 $result->usu_id = $fecht->usu_id; 
                 $result->rol_id = $fecht->rol_id; 
-                $result->tra_nombre = $fecht->usu_nombre_completo; 
+                $result->cli_id = $fecht->cli_id; 
+                $result->tra_nombre = $fecht->cli_nombre; 
                 $result->usu_login = $fecht->usu_login; 
                 $result->usu_clave = $fecht->usu_clave; 
                 $result->usu_imagen = $fecht->usu_imagen; 
@@ -73,14 +75,20 @@ class Admin
         {
             if(empty($model->usu_id))
             {//si no existe id es un dato nuevo
-                $sql = 'INSERT INTO usuario(rol_id, usu_login, usu_clave, usu_fecha_creacion, usu_correo, usu_estado) VALUES (?,?,?,?,?,1)';
+                $sql_cli = 'insert into cliente(cli_nombre, tip_ide_id, cli_num_doc, cli_direccion, 
+                    cli_telefono, cli_correo, cli_estado) values(?,?,?,?,?,?,1)';
+                $stm_cli = $this->pdo->prepare($sql_cli);
+                $stm_cli->execute(["", 1, "", "", "", $model->usu_correo]);
+                $cliente_id =  $this->pdo->lastInsertId();
+
+                $sql = 'INSERT INTO usuario(rol_id, cli_id, usu_login, usu_clave, usu_fecha_creacion, usu_estado) VALUES (?,?,?,?,?,1)';
                 $stm = $this->pdo->prepare($sql);
                 $stm->execute([
                     $model->rol_id,
+                    $cliente_id,
                     $model->usu_nombre,
                     $model->usu_contrasena,
                     date('Y-m-d H:i:s'),
-                    $model->usu_correo
                 ]);
             } 
             $result = 1;

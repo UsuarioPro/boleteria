@@ -13,7 +13,9 @@ class Usuario{
     {
         $result = [];
         try {
-            $stm = $this->pdo->prepare('SELECT * FROM usuario as u INNER JOIN rol as r ON r.rol_id = u.rol_id');
+            $stm = $this->pdo->prepare('SELECT * FROM usuario as u INNER JOIN rol as r ON r.rol_id = u.rol_id
+                INNER JOIN cliente as c ON c.cli_id = u.cli_id
+                INNER JOIN tipo_identificacion_documento as ti ON ti.tip_ide_id = c.tip_ide_id;');
             $stm->execute();
             $result = $stm->fetchAll();
         } catch (Exception $e){
@@ -42,6 +44,21 @@ class Usuario{
         $token = md5(uniqid(mt_rand(), false));
         return $token;
     }
+    public function guardar_editar_logo($imagen, $usu_id)
+    {
+        $result = 2;
+        try
+        {
+            $sql = 'UPDATE usuario SET usu_imagen = ? WHERE usu_id = ?';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$imagen, $usu_id]);
+            $result = 1;
+        } catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
     public function guardar_editar($model)
     {
         $result = 2;
@@ -49,39 +66,27 @@ class Usuario{
         {
             if(empty($model->usu_id))
             {//si no existe id es un dato nuevo
-                $sql = 'INSERT INTO usuario(rol_id, usu_login, usu_clave, usu_imagen, usu_fecha_creacion, usu_nombre_completo, usu_tipo_doc, 
-                usu_numero_doc, usu_direccion, usu_telefono, usu_correo, usu_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,1)';
+                $sql = 'INSERT INTO usuario(rol_id, cli_id, usu_login, usu_clave, usu_imagen, usu_fecha_creacion, usu_estado) VALUES (?,?,?,?,?,?,1)';
                 $stm = $this->pdo->prepare($sql);
                 $stm->execute([
                     $model->rol_id,
+                    $model->cli_id,
                     $model->usu_nombre,
                     $model->usu_contrasena,
                     $model->usu_imagen,
                     date('Y-m-d H:i:s'),
-                    $model->usu_nombre_completo, 
-                    $model->usu_tipo_doc, 
-                    $model->usu_num_doc, 
-                    $model->usu_direccion, 
-                    $model->usu_telefono, 
-                    $model->usu_correo
                 ]);
             } 
             //si existe entonces el dato se actualiza
             else 
             {
-                $sql = "UPDATE usuario SET rol_id= ?, usu_login= ?, usu_imagen= ?, usu_nombre_completo = ?, usu_tipo_doc= ?, usu_numero_doc = ?, 
-                usu_direccion = ?, usu_telefono = ?, usu_correo = ? WHERE usu_id = ?";
+                $sql = 'UPDATE usuario SET rol_id= ?, cli_id = ?, usu_login= ?, usu_imagen= ? WHERE usu_id = ?';
                 $stm = $this->pdo->prepare($sql);
                 $stm->execute([
                     $model->rol_id,
+                    $model->cli_id,
                     $model->usu_nombre,
                     $model->usu_imagen,
-                    $model->usu_nombre_completo, 
-                    $model->usu_tipo_doc, 
-                    $model->usu_num_doc, 
-                    $model->usu_direccion, 
-                    $model->usu_telefono, 
-                    $model->usu_correo,
                     $model->usu_id,
                 ]);
             }
@@ -169,6 +174,20 @@ class Usuario{
         try 
         {
             $stm = $this->pdo->prepare('select * from rol where rol_estado = 1');
+            $stm->execute();
+            $result = $stm->fetchAll();
+        } 
+        catch (Exception $e)
+        {
+            $this->log->insert($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+        }
+        return $result;
+    }
+    public function obtener_clientes()
+    {
+        try 
+        {
+            $stm = $this->pdo->prepare('SELECT * FROM cliente as c WHERE c.cli_estado = 1 ');
             $stm->execute();
             $result = $stm->fetchAll();
         } 

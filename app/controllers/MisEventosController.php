@@ -5,7 +5,7 @@ require_once 'app/models/Navbar.php';
 require_once 'app/models/Bitacora.php';
 require_once 'app/models/Log.php'; 
 
-class EventosController
+class MisEventosController
 {
     private $navbar;
     private $evento;
@@ -32,7 +32,7 @@ class EventosController
 
         require_once _VIEW_PATH_ . 'header-admin.php';
         require_once _VIEW_PATH_ . 'navbar-admin.php';
-        require_once _VIEW_PATH_ . 'eventos/eventos.php';
+        require_once _VIEW_PATH_ . 'eventos/mis_eventos.php';
         require_once _VIEW_PATH_ . 'footer-admin.php';
     }
     public function verificar_permiso()
@@ -67,16 +67,56 @@ class EventosController
                 "<div class='text-center'><img src='"._SERVER_."styles/img/imagen-no-disponible.jpg' height='50px' width='60px'></div>",
                 "9"=>($m->con_portada)?"<div class='text-center'><img data-fancybox='gallery".$m->con_id."' class='portada' src='"._SERVER_."media/concierto_portada/".$m->con_portada."' height='50px' width='60px'></div>":
                 "<div class='text-center'><img src='"._SERVER_."styles/img/imagen-no-disponible.jpg' height='50px' width='60px'></div>",
-                // "10"=>($m->con_estado)?'<span class="badge bg-gradient-success"> YA REALIZADO</span>':'<span class="badge bg-gradient-danger">EN VENTA</span>',
-                "10"=>$this->estado = ($m->con_estado == 0)?'<span class="badge bg-gradient-orange"> ESPERANDO<br>CONFIRMACION  </span>': 
-                    $this->estado = ($m->con_estado == 1)? '<span class="badge bg-gradient-success">EVENTO<br>APROBADO</span>' : 
-                    $this->estado = ($m->con_estado == 2)? '<span class="badge bg-gradient-warning">EVENTO<br>RECHAZADO</span>' : '<span class="badge bg-gradient-primary">EVENTO<br>REALIZADO</span>',
+                "10"=>($m->con_estado)?'<span class="badge bg-gradient-success"> YA REALIZADO</span>':'<span class="badge bg-gradient-danger">EN VENTA</span>',
                 "11"=> 
-                    $this->isDefaulf = ($m->con_estado == 1)?'<button data-tippy-content="<small>Editar Eventos</small>" class="tooltip_tippy btn btn-warning btn-circle btn-sm btn-flat" onclick="editar('.$m->con_id.')"><i class="fas fa-edit"></i></button></a>'.
-                    ' <button data-tippy-content="<small>Desactivar Eventos</small>"  class="tooltip_tippy btn btn-danger btn-circle btn-sm btn-flat" onclick="desactivar('."3".','.$m->con_id.')"><i class="fas fa-toggle-on"></i></button>'.
-                    ' <button hidden data-tippy-content="<small>Rechazar Evento</small>"  class="tooltip_tippy btn btn-primary btn-circle btn-sm btn-flat" onclick="rechazar('."2".','.$m->con_id.')"><i class="fas fa-ban"></i></button>'.
+                    $this->isDefaulf = ($m->con_estado == 0)?'<button data-tippy-content="<small>Editar Eventos</small>" class="tooltip_tippy btn btn-warning btn-circle btn-sm btn-flat" onclick="editar('.$m->con_id.')"><i class="fas fa-edit"></i></button></a>'.
+                    ' <button data-tippy-content="<small>Desactivar Eventos</small>"  class="tooltip_tippy btn btn-danger btn-circle btn-sm btn-flat" onclick="desactivar('."1".','.$m->con_id.')"><i class="fas fa-toggle-on"></i></button>'.
                     ' <button hidden data-tippy-content="<small>Eliminar Eventos</small>"  class="tooltip_tippy btn btn-danger btn-circle btn-sm btn-flat" onclick="eliminar('.$m->con_id.')"><i class="fas fa-trash"></i></button>':
-                    ' <button data-tippy-content="<small>Activar Eventos</small>" class="tooltip_tippy btn btn-success btn-circle btn-sm btn-flat" onclick="activar('."1".','.$m->con_id.')"><i class="fas fa-toggle-off"></i></button>'
+                    ' <button data-tippy-content="<small>Activar Eventos</small>" class="tooltip_tippy btn btn-success btn-circle btn-sm btn-flat" onclick="activar('."0".','.$m->con_id.')"><i class="fas fa-toggle-off"></i></button>'
+            );
+            $i++;
+        }
+        $result = array(
+            "sEcho"=>1,//para numerar el datatable   btn btn-success
+            "iTotalRecords"=>count($data),//enviamos el total de registros al datatable
+            "iTotalDisplayRecords"=>count($data),//enviamos el total de registros  a visualizar al datatable
+            "aaData"=>$data);
+        echo json_encode($result);
+    }
+    public function listar_por_cliente()
+    {
+        $model = $this->evento->listar_por_cliente($_SESSION['cli_id']);
+        $data = array();
+        $i=1;
+        foreach ($model as $m)
+        {
+            $artistas = $this->evento->obtener_artistas_conciertos($m->con_id);
+            $templade = '';
+            foreach ($artistas as $a)
+            {
+                $templade .= '<li style="white-space: normal; word-wrap: break-word; text-align : justify !important;">'.$a->art_nombre.' -HORA PRESENTACION: '.date("d/m/Y h:i:s A", strtotime($a->art_con_horario_presentacion)).'</li> ';
+            }
+
+            $data[]=array(
+                "0"=>$i,
+                "1"=>$m->con_nombre.'<br><small>'.$m->con_subtitulo.'</small>' ,
+                "2"=>'<span style="white-space: normal; word-wrap: break-word; text-align : justify !important;">'.$m->con_descripcion.'</span>',
+                "3"=>date("d/m/Y h:i:s A", strtotime($m->con_fecha.' '.$m->con_hora)),
+                "4"=>$m->loc_nombre.'<br><small>DIRECCION: '.$m->loc_direccion.' - CIUDAD: '.$m->loc_ciudad.'</small>' ,
+                "5"=>$m->cat_nombre,
+                "6"=>$templade,
+                "7"=>($m->con_imagen)?"<div class='text-center'><img data-fancybox='gallery".$m->con_id."' src='"._SERVER_."media/concierto_logo/".$m->con_imagen."' height='50px' width='60px'></div>":
+                "<div class='text-center'><img src='"._SERVER_."styles/img/imagen-no-disponible.jpg' height='50px' width='60px'></div>",
+                "8"=>($m->con_portada)?"<div class='text-center'><img data-fancybox='gallery".$m->con_id."' class='portada' src='"._SERVER_."media/concierto_portada/".$m->con_portada."' height='50px' width='60px'></div>":
+                "<div class='text-center'><img src='"._SERVER_."styles/img/imagen-no-disponible.jpg' height='50px' width='60px'></div>",
+                "9"=>$this->estado = ($m->con_estado == 0)?'<span class="badge bg-gradient-orange"> ESPERANDO<br>CONFIRMACION  </span>': 
+                    $this->estado = ($m->con_estado == 1)? '<span class="badge bg-gradient-danger">EVENTO<br>APROBADO</span>' : 
+                    $this->estado = ($m->con_estado == 2)? '<span class="badge bg-gradient-warning">EVENTO<br>RECHAZADO</span>' : '<span class="badge bg-gradient-primary">EVENTO<br>REALIZADO</span>',
+                "10"=> 
+                    $this->isDefaulf = ($m->con_estado == 0)?'<button data-tippy-content="<small>Editar Eventos</small>" class="tooltip_tippy btn btn-warning btn-circle btn-sm btn-flat" onclick="editar('.$m->con_id.')"><i class="fas fa-edit"></i></button></a>'.
+                    ' <button hidden data-tippy-content="<small>Desactivar Eventos</small>"  class="tooltip_tippy btn btn-danger btn-circle btn-sm btn-flat" onclick="desactivar('."1".','.$m->con_id.')"><i class="fas fa-toggle-on"></i></button>'.
+                    ' <button data-tippy-content="<small>Eliminar Eventos</small>"  class="tooltip_tippy btn btn-danger btn-circle btn-sm btn-flat" onclick="eliminar('.$m->con_id.')"><i class="fas fa-trash"></i></button>':
+                    ' <button hidden data-tippy-content="<small>Activar Eventos</small>" class="tooltip_tippy btn btn-success btn-circle btn-sm btn-flat" onclick="activar('."0".','.$m->con_id.')"><i class="fas fa-toggle-off"></i></button>'
             );
             $i++;
         }
@@ -181,8 +221,10 @@ class EventosController
             $model->con_hora = $_POST['con_hora'];
             $model->con_imagen = $imagen4;
             $model->con_portada = $imagen5;
+            $model->con_estado = $_POST['con_estado'];
             $model->art_id = $_POST['art_id'];
             $model->art_fecha_hora = $_POST['art_fecha_hora'];
+            
 
             $model->zon_id = isset($_POST['zon_id'])? $_POST['zon_id'] : null;
             $model->zon_nombre = $_POST['zon_nombre'];
@@ -271,7 +313,7 @@ class EventosController
             $con_estado = $_POST['con_estado'];
             
             $result = $this->evento->activar_desactivar($con_estado,$con_id);
-            if($result !== 1 && $result !== 2 && $result !== 3) 
+            if($result !== 1 && $result !== 2) 
             {
                 $this->bitacora->guardar('Fallo Al cambiar estado de Eventos con ID: ' . $con_id, 'Falla Sistema');
                 $rpta = 'error';
@@ -289,12 +331,6 @@ class EventosController
                 $rpta = 'ok';
                 $mensaje = 'La Eventos fue Desactivado correctamente';
             }
-            else if($result==2)
-            {
-                $this->bitacora->guardar('Eventos activado con ID: ' . $con_id, 'Activado');
-                $rpta = 'ok';
-                $mensaje = 'Evento Rechazado Correctamente correctamente';
-            }
         } 
         catch (Throwable $e) 
         {
@@ -304,28 +340,22 @@ class EventosController
         }
         echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
     }
-    // public function eliminar()
-    // {
-    //     $con_id = $_POST['con_id'];
-    //     $result = $this->evento->eliminar($con_id);
-    //     if($result == 1)
-    //     {
-    //         $this->bitacora->guardar('Eventos Eliminada con ID: ' . $con_id, 'success');
-    //         $rpta = 'ok';
-    //         $mensaje = 'Eventos Eliminada correctamente';        
-    //     }
-    //     else if($result == 2)
-    //     {
-    //         $this->bitacora->guardar('Fallo al Eliminar la Eventos con ID: ' . $con_id . ' por que esta vinculada en los productos', 'warning');
-    //         $rpta = 'error';
-    //         $mensaje = 'Imposible Eliminar la Eventos ya que esta se encuenta vinculada en productos.';        
-    //     }
-    //     else
-    //     {
-    //         $this->bitacora->guardar('Fallo al Eliminar la Eventos con ID: ' . $con_id, 'error');
-    //         $rpta = 'error';
-    //         $mensaje = 'Hubo un error Critico, Intente contactar con el administrador del sistema';        
-    //     }
-    //     echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
-    // }
+    public function eliminar()
+    {
+        $con_id = $_POST['con_id'];
+        $result = $this->evento->eliminar($con_id);
+        if($result == 1)
+        {
+            $this->bitacora->guardar('Evento con ID: ' . $con_id, 'success');
+            $rpta = 'ok';
+            $mensaje = 'Evento Eliminado correctamente';        
+        }
+        else
+        {
+            $this->bitacora->guardar('Fallo al Eliminar el concierto con ID: ' . $con_id, 'error');
+            $rpta = 'error';
+            $mensaje = 'Hubo un error Critico, Intente contactar con el administrador del sistema';        
+        }
+        echo json_encode(array("rpta"=>$rpta, "mensaje" => $mensaje));
+    }
 }

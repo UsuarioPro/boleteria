@@ -52,14 +52,6 @@
                                     </div>                      
                                     <form id="formulario" name="formulario" method="POST" accept-charset="utf-8">
                                         <div class="modal-body p-0 m-0">
-                                            <div class="overlay-wrapper">
-                                                <div class="overlay" id="overlay_busqueda_sunat">
-                                                    <div class="text-center">
-                                                        <i class="fa-duotone fa-spinner fa-spin-pulse fa-5x text-primary "></i> <br>
-                                                        <span class="text-bold text-primary">Espere un momento, Estamos cargando la información</span>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="col-md-12 p-0 m-0" id="tabs">
                                                 <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                                                     <li class="nav-item">
@@ -73,44 +65,10 @@
                                             <div class="tab-content" id="custom-tabs-four-tabContent">
                                                 <div class="tab-pane fade show active" id="custom-tabs1" role="tabpanel" aria-labelledby="custom-tabs1-tab">
                                                     <div class="row pt-2 pl-3 pr-3">
-                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                            <input type="hidden" id="usu_id" name="usu_id">
-                                                            <input type="hidden" id="usu_token" name="usu_token">
-                                                            <label>Tipo Documento</label><label class="text-red">(*)</label>
-                                                            <select name="tra_tipo_doc" id="tra_tipo_doc" class="form-control rounded-0 select2" required="seleccione tipo de documento">
-                                                                <option value="" disabled selected>Seleccione una opcion</option>
-                                                                <option value="DNI">DNI</option>
-                                                                <option value="CARNET">CARNET DE EXT.</option>
-                                                                <option value="OTROS">OTROS DOC.</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                            <label>Num. Documento</label><label class="text-red">(*)</label>    
-                                                            <div class="input-group">
-                                                                <input type="search" class="form-control rounded-0 validacion_entero" name="tra_num_doc" id="tra_num_doc" maxlength="12" placeholder="Numero de Documento" required>
-                                                                <span class="input-group-append">
-                                                                    <button type="button" id="btn_sunat" class="btn btn-primary btn-flat"><i class="fa fa-search"></i> Sunat
-                                                                    <img id="spinner" name="spinner" src="<?= _SERVER_ ?>styles/img/spinner.gif" style="width: 23px;">                                                                
-                                                                </button>
-                                                            
-                                                                </span>
-                                                            </div>                                                    
-                                                        </div>
-                                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>Nombre Completo</label><label class="text-red">(*)</label>               
-                                                            <input type="text" class="form-control rounded-0 validacion_mayuscula" name="tra_nombre_completo" id="tra_nombre_completo" maxlength="250" placeholder="Nombre del Trabajador" required>
-                                                        </div>
-                                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>Direccion</label>                                                        
-                                                            <input type="text" class="form-control rounded-0 validacion_mayuscula" name="tra_direccion" id="tra_direccion" maxlength="250" placeholder="Direccion">
-                                                        </div>
-                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                            <label>Correo</label>                                                        
-                                                            <input type="text" class="form-control rounded-0" name="tra_correo" id="tra_correo" maxlength="200" placeholder="Correo Electronico">
-                                                        </div>
-                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                            <label>Telefono</label>                                                       
-                                                            <input type="text" class="form-control rounded-0 validacion_entero" name="tra_telefono" id="tra_telefono" maxlength="12" placeholder="Telefono o Celular">
+                                                        <input type="hidden" id="usu_id" name="usu_id">
+                                                        <div class="form-group col-sm-12">
+                                                            <label>Organizador</label><label class="text-red">(*)</label>
+                                                            <select name="cli_id" id="cli_id" class="form-control rounded-0 select2"></select>
                                                         </div>
                                                         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <label>Nombre de Usuario</label><label class="text-red">(*)</label>

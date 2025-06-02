@@ -5,7 +5,7 @@ window.onload = function()
     file_4.setOptions(option_FilePondImage);
     $('#myModal').on('shown.bs.modal', function () 
     {
-        (nuevo_usuario == true)? $("#tra_tipo_doc").select2("open") : $('#tra_nombre_completo').focus();
+        $('#usu_nombre').focus();
     });
     $('#myModalContrasena').on('shown.bs.modal', function () 
     {
@@ -48,117 +48,28 @@ window.onload = function()
     $('#btn_guardar_contrasena').click(guardar_cambiar_contrasena);
     $('#btn_cancelar_contrasena').click(cancelarformContrasena);
     validar_formulario_contrasena();
+    obtener_clientes();
     // -----------------------------------------------------------------------
-    $('#overlay_busqueda_sunat').hide();
-    $('#tra_tipo_doc').change(habilitar_campo_documento);
-    $('#tra_tipo_doc').trigger('change');
-    $('#btn_sunat').click(busqueda_sunat_dni);
 }
-function habilitar_campo_documento()
+function obtener_clientes() 
 {
-    $("#spinner").hide();
-    if($('#tra_tipo_doc').val() != null)
-    {
-        setTimeout(() =>  { $('#tra_num_doc').focus(); }, 150);
-        $('#tra_num_doc').attr('disabled', false);
-        ($('#tra_tipo_doc').val() == "DNI")?  $('#btn_sunat').attr('disabled', false) :  $('#btn_sunat').attr('disabled', true);
-    }
-    else
-    {
-        $('#tra_num_doc').attr('disabled', true);
-        $('#btn_sunat').attr('disabled', true);
-    }
-}
-function busqueda_sunat_dni()
-{
-    if($('#tra_num_doc').val() != '')
-    {
-        let tipo_conexion = 2;        
-        $.ajax({
-            data: { "ndni": $("#tra_num_doc").val() },
-            type: "POST",
-            dataType: "json",
-            url: urlweb + '?c=Sunat&a=busqueda_sunat_dni',
-            beforeSend: function()
-            {
-                $('#overlay_busqueda_sunat').show();
-                $("#btn_sunat").attr("disabled",true);
-                $("#btn_guardar").prop("disabled",true);
-                $("#btn_cancelar").prop("disabled",true);
-                $("#spinner").show();
-            }, 
-        }).done(function(datos, textStatus, jqXHR)
+    $.ajax({
+        url: urlweb + '?c=Usuario&a=obtener_clientes',
+        type: 'POST',
+        beforeSend: function()
         {
-            if(tipo_conexion == 1)
-            {
-                if(datos.rpta == 'error')
-                {
-                    alerta_global("error",datos['mensaje']);
-                }
-                else
-                {
-                    datos = JSON.parse(datos);
-                    if(datos['success'] == false)
-                    {
-                        alerta_global("error",datos['message']);
-                    }
-                    else if(datos['success'] == true)
-                    {
-                        $('#tra_nombre_completo').val(datos['data']['nombres'] + " " + datos['data']['apellido_paterno'] + " " + datos['data']['apellido_materno']);
-                        $('#tra_direccion').val(datos['data']['direccion'])
-                        alerta_global('success', 'Datos cargados correctamente');
-                    }
-                }    
-            }
-            else if(tipo_conexion == 2)
-            {
-                if(datos == 'Not Found')
-                {
-                    alerta_global('warning', 'Este Numero de Documento no se encuentra registrado en nuesta base de datos. <br> Por favor introduzca o verifique el numero de documento.')
-                }
-                else
-                {
-                    if(datos['rpta'] == 'error')
-                    {
-                        alerta_global('warning', datos['mensaje'])
-                    }
-                    else
-                    {
-                        datos = JSON.parse(datos);
-                        if(datos.error)
-                        {
-                            alerta_global('warning', datos.error)
-                        }
-                        else
-                        {
-                            $('#tra_nombre_completo').val(datos.nombres + " " + datos.apellidoPaterno + " " + datos.apellidoMaterno);
-                            $('#tra_direccion').val(datos.direccion);
-                            alerta_global('success', 'Datos cargados correctamente');
-                        }
-                    }
-                }
-            }
-        }).always(function()
-        {
-            $('#overlay_busqueda_sunat').hide();
-            $("#spinner").hide();
-            $("#btn_sunat").attr("disabled",false);
-            $("#btn_guardar").prop("disabled",false);
-            $("#btn_cancelar").prop("disabled",false);
-        }).fail(function(jqXHR, textStatus, errorThrown)
-        {
-            if (buscar_cadena(jqXHR.responseText, 'Maximum execution time') == true)
-            alerta_global("warning",'El Tiempo de Ejecucion Termino, Compruebe que tenga una Buena conexion a Internet');
-            else if (buscar_cadena(jqXHR.responseText, '¡UPS! Ya lo malograste') == true)
-            alerta_global("warning",'Usted no cuenta con permiso para realizar la busqueda correspondiente');
-            else
-            alerta_global("error",mensaje_error_ajax);
-        });
-    }
-    else
+            // $('#overlay_general').show();
+        },
+    }).done(function(data, textStatus, jqXHR)
     {
-        alerta_global('warning', 'Ingrese el numero de documento');
-    }
+        $('#cli_id').html(data);
+    }).always(function()//cuando se completa 
+    {
+        // $('#overlay_general').hide();
+    }).fail(function(jqXHR, textStatus, errorThrown)
+    {
+        alerta_global("error",mensaje_error_ajax);
+    });
 }
 function seleccionar_rol()
 {
@@ -204,6 +115,10 @@ function validar_formulario()
     var validator = $( "#formulario" ).validate({
         rules:
         {
+            'cli_id':
+            {
+                required: true,
+            },
             'usu_rol_id':
             {
                 required: true,
@@ -223,6 +138,10 @@ function validar_formulario()
         },
         messages:
         {
+            'cli_id':
+            {
+                required: 'Por favor, seleccione un cliente',
+            },
             'usu_rol_id':
             {
                 required: 'Por favor, seleccione un rol para el usuario',
@@ -269,19 +188,13 @@ function limpiar()
 {
     $('#usu_id').val(null);
     $('#usu_rol_id').val(null).trigger('change');
+    $('#cli_id').val(null).trigger('change');
     $('#usu_nombre').val(null);
     $('#usu_contrasena').val(null);
     $('#usu_contrasena_repetir').val(null);
     $('#usu_rol_id').val(null);
-    $('#titulo').html('Registrar Nuevo Usuario');
     $('#div_contrasena').show();
     $('#div_contrasena_rep').show();
-    $('#tra_tipo_doc').val(null).trigger('change');
-    $('#tra_num_doc').val(null);
-    $('#tra_nombre_completo').val(null);
-    $('#tra_direccion').val(null);
-    $('#tra_correo').val(null);
-    $('#tra_telefono').val(null);
     $('#temp_img1').val(null);
     $('#usu_token').val(null);
     mostrar_boton_ocultar();  
@@ -305,19 +218,13 @@ function editar(usu_id)
         },
     }).done(function(data) 
     {  
-        $('#titulo').html('Editar Usuario');
         $('#usu_id').val(data.usu_id);
+        $('#cli_id').val(data.cli_id);
         $('#usu_nombre').val(data.usu_login);
         $('#usu_rol_id').val(data.rol_id).trigger('change');
         //Esta es la variable que contiene la url de una imagen ejemplo, luego puedes poner la que quieras
         $('#div_contrasena').hide();
         $('#div_contrasena_rep').hide();
-        $('#tra_tipo_doc').val(data.usu_tipo_doc).trigger('change');
-        $('#tra_num_doc').val(data.usu_numero_doc);
-        $('#tra_nombre_completo').val(data.usu_nombre_completo);
-        $('#tra_direccion').val(data.usu_direccion);
-        $('#tra_correo').val(data.usu_correo);
-        $('#tra_telefono').val(data.usu_telefono);
         $('#usu_token').val(data.usu_token);
 
         $('#temp_img1').val(data.usu_imagen);

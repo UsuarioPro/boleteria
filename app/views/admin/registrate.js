@@ -42,18 +42,18 @@ function registrar(e)
                     url: urlweb + "?c=Admin&a=loguearse",
                     data: {logina : $('#logina').val(), clavea : $('#clavea').val()},
                     dataType: 'json',
-                }).done(function(data)
+                }).done(function(datos)
                 {
                     limpiar();
                     $("#titulo").html("Ingreso Exitoso");
                     $("#mensaje").html("Redireccionando...");
-                    if(data.rpta  == 0)
+                    if(datos.rpta  == 0)
                     {
                         if(data.rol_id == 2)
                         {
                             location.href =  urlweb + "Tienda/bienvenida";                            
                         }
-                        else if(data.rol_id == 1)
+                        else
                         {
                             location.href =  urlweb;                            
                         }
