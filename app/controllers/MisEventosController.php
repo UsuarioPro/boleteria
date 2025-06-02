@@ -94,7 +94,7 @@ class MisEventosController
             $templade = '';
             foreach ($artistas as $a)
             {
-                $templade .= '<li style="white-space: normal; word-wrap: break-word; text-align : justify !important;">'.$a->art_nombre.' -HORA PRESENTACION: '.date("d/m/Y h:i:s A", strtotime($a->art_con_horario_presentacion)).'</li> ';
+                $templade .= '<li style="white-space: normal; word-wrap: break-word; text-align : justify !important;">'.$a->art_nombre.' -HORA PRESENTACION: '.date("h:i:s A", strtotime($a->art_con_horario_presentacion)).'</li> ';
             }
 
             $data[]=array(

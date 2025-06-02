@@ -14,6 +14,9 @@ window.onload = function()
     $('#btn_cupon').click(function (e) { 
         alerta_global('warning', 'El codigo o el cupon ingresado es incorrecto');
     });
+    $('#btn_continuar_comprando').click(function(){
+        history.back(); 
+    });
     // $('.btn-comprar').click(function () 
     // {
     //     const card = $(this).closest('.card');

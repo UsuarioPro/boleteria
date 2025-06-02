@@ -51,6 +51,11 @@ function validar_formulario()
             {
                 required: true,
             },      
+            'con_fecha':
+            {
+                required: true,
+                min: true,
+            }
         },
         messages: 
         {
@@ -551,30 +556,42 @@ function agregar_artista()
     {
         if($('#fecha_hora').val() != '')
         {
-            let art_id = $('#select_artista').val();
-            if(validar_producto_repetido(art_id) === false)
+            let hora1 = $('#con_hora').val();      // Ejemplo: "14:30"
+            let hora2 = $('#fecha_hora').val();    // Ejemplo: "13:45"
+            let h1 = moment(hora1, 'HH:mm');
+            let h2 = moment(hora2, 'HH:mm');
+            
+            if (h2.isBefore(h1)) 
             {
-                let fecha_hora = $('#fecha_hora').val();
-                let fechaFormateada = moment(fecha_hora).format('DD/MM/YYYY hh:mm A');
-                var nombre = $('#select_artista option:selected').attr('data_nombre');
-                let html = `<tr class="filas" id="fila_`+art_id+`">
-                        <td>`+nombre+`</td>
-                        <td>
-                            `+fechaFormateada+`
-                            <input type="hidden" name="art_id[]" value="`+art_id+`">
-                            <input type="hidden" name="art_fecha_hora[]" value="`+fecha_hora+`">
-                        </td>
-                        <td><button type="button" class="btn btn-danger" onclick="eliminar_detalle(`+art_id+`)"><i class="fas fa-trash"></i> </button>  </td>
-                    </tr>`;
-                $('#tbl_artista tbody').append(html);
-                setTimeout(() => {
-                    $('#fecha_hora').val(null);
-                    $('#select_artista').val(null).trigger('change');
-                }, 100);
+                    alerta_global('warning', 'La hora de la presentacion no puede ser menor que la hora del evento');                
             }
             else
             {
-                alerta_global('warning', 'Este Artista o Grupo ya se encuentra seleccionado');
+                let art_id = $('#select_artista').val();
+                if(validar_producto_repetido(art_id) === false)
+                {
+                    let fecha_hora = $('#fecha_hora').val();
+                    let fechaFormateada = moment(fecha_hora).format('DD/MM/YYYY hh:mm A');
+                    var nombre = $('#select_artista option:selected').attr('data_nombre');
+                    let html = `<tr class="filas" id="fila_`+art_id+`">
+                            <td>`+nombre+`</td>
+                            <td>
+                                `+fechaFormateada+`
+                                <input type="hidden" name="art_id[]" value="`+art_id+`">
+                                <input type="hidden" name="art_fecha_hora[]" value="`+fecha_hora+`">
+                            </td>
+                            <td><button type="button" class="btn btn-danger" onclick="eliminar_detalle(`+art_id+`)"><i class="fas fa-trash"></i> </button>  </td>
+                        </tr>`;
+                    $('#tbl_artista tbody').append(html);
+                    setTimeout(() => {
+                        $('#fecha_hora').val(null);
+                        $('#select_artista').val(null).trigger('change');
+                    }, 100);
+                }
+                else
+                {
+                    alerta_global('warning', 'Este Artista o Grupo ya se encuentra seleccionado');
+                }
             }
         }
         else

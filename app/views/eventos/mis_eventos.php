@@ -87,7 +87,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-6">
                                                     <label>Fecha Evento</label><label class="text-red">(*)</label>
-                                                    <input type="date" class="form-control rounded-0 validacion_mayuscula" name="con_fecha" id="con_fecha" placeholder="Fecha Evento"required>
+                                                    <input type="date"  class="form-control rounded-0 validacion_mayuscula" name="con_fecha" id="con_fecha" placeholder="Fecha Evento" min="<?= date('Y-m-d')?>" required>
                                                 </div>
                                                 <div class="form-group col-sm-6">
                                                     <label>Hora Evento</label><label class="text-red">(*)</label>
@@ -118,7 +118,7 @@
                                                         </div>
                                                         <div class="form-group col-sm-6">
                                                             <label>Fecha y Hora de Presentacion</label><label class="text-red">(*)</label>
-                                                            <input type="datetime-local" class="form-control rounded-0 validacion_mayuscula" name="fecha_hora" id="fecha_hora" placeholder="Fecha Evento">
+                                                            <input type="time" class="form-control rounded-0 validacion_mayuscula" name="fecha_hora" id="fecha_hora" placeholder="Fecha Evento">
                                                         </div>
                                                         <div class="form-group col-sm-12 pt-0 mt-0">
                                                             <a id="btn_agregar_pago" style="margin-top: -10px;" type="button" class="btn btn-success text-bold float-right">[ + AGREGAR ARTISTA ]</a>

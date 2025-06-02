@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="button-area">
-                            <a href="<?= _SERVER_?>" class="continue">Continuar Comprando</a>
+                            <a href="#" id="btn_continuar_comprando" class="continue">Continuar Comprando</a>
                             <a href="<?= _SERVER_?>Tienda/proceder_pago/<?= $_SESSION['usu_id'] ?>" class="checkout">Proceder a Pagar</a>
                         </div>
                     </div>

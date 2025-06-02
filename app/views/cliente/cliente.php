@@ -92,8 +92,8 @@
                                                     <input type="text" class="form-control rounded-0 validacion_entero" id="cli_telefono" name="cli_telefono" maxlength="12" placeholder="Telefono" >
                                                 </div>
                                                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xl-12">
-                                                    <label>Correo</label>
-                                                    <input type="email" class="form-control rounded-0" id="cli_correo" name="cli_correo" maxlength="150" placeholder="correo electronico" >
+                                                    <label>Correo</label><label class="text-red">(*)</label>
+                                                    <input type="email" class="form-control rounded-0" id="cli_correo" name="cli_correo" maxlength="150" placeholder="correo electronico" required>
                                                 </div>
                                             </div>
                                         </div>
